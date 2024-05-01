@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sweet Mist</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row gap-5">
+                <div class="col-lg-12">
+                    <div class="card border shadow-0">
+                      <div class="m-4">
+                        <h4 class="card-title mb-4">Your shopping cart</h4>
+                        {% for item in items %}
+                        <div class="row gy-3 mb-4">
+                          <div class="col-lg-5">
+                            <div class="me-lg-5">
+                              <div class="d-flex">
+                                <img src="{{item.image_1}}" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                                <div class="">
+                                  <a href="{% url 'prod_details-list' %}?slug={{item.slug}}" class="nav-link">{{item.title}}</a>
+                                  <p class="text-muted">Yellow, Jeans</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                            <div class="">
+                              <div class="qua-col first-row me-4">
+                                <div class="quantity">
+                                    <div class="pro-qty" onclick="update_cart_btn({{item.id}})">
+                                        <input type="text" value="{{item.qty}}" id="qty_{{item.id}}">
+                                    </div>
+                                    <input type="hidden" value="{{item.id}}" id="item_id_{{item.id}}">
+                                </div>
+                                
+                            </div>
+                              
+                            </div>
+                            <div class="">
+                              <text class="h6">₹ {{item.total_price}}</text> <br />
+                              <small class="text-muted text-nowrap"> ₹ {{item.price}} / per item </small>
+                            </div>
+                          </div>
+                          <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                            <div class="float-md-end">
+                              <!-- <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a> -->
+                              <a style="display: none;" onclick="update_cart({{item.id}})" class="btn btn-light border text-success icon-hover-success me-3" id="upd_cart_btn_{{item.id}}"> <b>Update Cart</b></a>
+                              <a onclick="remove_cart_item({{item.id}})" class="btn btn-light border text-danger icon-hover-danger"> <b>Remove</b></a>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+            
+                      <!-- <div class="border-top pt-4 mx-4 mb-4">
+                        <p><i class="fas fa-truck text-muted fa-lg"></i> Free Delivery within 1-2 weeks</p>
+                        <p class="text-muted">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                          aliquip
+                        </p>
+                      </div> -->
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <!-- <div class="cart-buttons">
+                                <a href="#" class="primary-btn continue-shop">Continue shopping</a>
+                                <a href="#" class="primary-btn up-cart" onclick="update_cart()">Update cart</a>
+                            </div> -->
+                            <div class="discount-coupon">
+                                <h6>Discount Codes</h6>
+                                <form action="#" class="coupon-form">
+                                    <input type="text" placeholder="Enter your codes">
+                                    <button type="submit" class="site-btn coupon-btn">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 offset-lg-4">
+                            <div class="proceed-checkout">
+                                <ul>
+                                    <li class="subtotal">Subtotal <span>₹ {{cart_total}}</span></li>
+                                    <li class="cart-total">Total <span>₹ {{cart_total}}</span></li>
+                                </ul>
+                                <a href="{% url 'check_out-list' %}?cart_checkout=True" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    {% include "related_products.html" %}
+    {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    <script>
+        async function remove_cart_item(item_id) {
+            try {
+                const csrftoken = '{{ csrf_token }}';
+                const response = await fetch("{% url 'cart-list' %}?item_id="+item_id, {
+                    method: 'DELETE',
+                    headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                });
+
+                const data = await response.json();
+                console.log(JSON.stringify(data, null, 2))
+                if (data.success == true){
+                    location.reload()
+                }
+            } catch (error) {
+                console.log(error.message)
+            }
+            }
+
+        async function update_cart(item_id){
+            try {
+                    const qty = document.getElementById("qty_"+item_id).value;
+                    const item_id_ele = document.getElementById("item_id_"+item_id).value;
+
+                    const csrftoken = '{{ csrf_token }}';
+                    const response = await fetch("{% url 'cart-list' %}?item_id="+item_id_ele+"&qty="+qty, {
+                        method: 'PUT',
+                        headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                    });
+
+                    const data = await response.json();
+                    console.log(JSON.stringify(data, null, 2))
+                    if (data.success == true){
+                        location.reload()
+                    }
+
+            } catch (error) {
+                
+            }
+        }
+    
+        function update_cart_btn(item_id){
+            const update_btn = document.getElementById('upd_cart_btn_'+item_id)
+            update_btn.style.display = 'inline'
+        }
+
+    </script>
+</body>
+
+</html>

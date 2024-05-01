@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sweet Mist</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="#"><i class="fa fa-home"></i> Home</a>
+                        <span>Login</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Form Section Begin -->
+
+    <!-- Register Section Begin -->
+    <div class="register-login-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="login-form">
+                        <h2>Login</h2>
+
+                        <div class="alert alert-danger" id="login_error" style="border: 1px solid red; display: none;" role="alert">
+                            Error occured, please try again!
+                        </div>
+                        <div class="alert alert-danger" id="login_error_not_user" style="border: 1px solid red; display: none;" role="alert">
+                        You don't have an account, please register!
+                        </div>
+                        <div class="alert alert-danger" id="wrong_password_error" style="border: 1px solid red; display: none;" role="alert">
+                        Wrong password, please try again!
+                        </div>
+
+                        <form id="login_form">
+                            <div class="row">
+                                <div class="col-12" id="mobile_number_input" style="display: none;">
+                                    <label for="login_number" class="form-label"><b>Mobile Number</b></label><br>
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="border: 1px solid black; border-right: 0px;">+91</span>
+                                        <input type="text" style="border: 1px solid black;" class="form-control" id="login_number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10">
+                                    </div>
+                                    <div style="color: black; cursor: pointer;" id="login_toggle" 
+                                    
+                                    onclick="document.getElementById('email_input').style.display = 'block';
+                                    document.getElementById('mobile_number_input').style.display = 'none';
+                                    document.getElementById('login_method').value='email';
+                                    document.getElementById('login_number').required=false;
+                                    document.getElementById('login_email').required=true"
+                                    
+                                    class="mb-4"><b><u>Login with email?</u></b></div>
+                                </div>
+    
+                                <div class="col-12" id="email_input">
+                                    <label for="login_email" class="form-label"><b>Email</b></label>
+                                    <input style="border: 1px solid black;" type="email" class="form-control mb-0" id="login_email" placeholder="Email ID" required>
+                                    <div style="color: black; cursor: pointer;" id="login_toggle" 
+                                    
+                                    onclick="document.getElementById('mobile_number_input').style.display = 'block';
+                                    document.getElementById('email_input').style.display = 'none';
+                                    document.getElementById('login_method').value='number';
+                                    document.getElementById('login_email').required=false;
+                                    document.getElementById('login_number').required=true"
+                                    
+                                    class="mb-4"><b><u>Login with mobile number?</u></b></div>
+                                </div>
+    
+                                <input id="login_method" type="hidden" value="email">
+    
+                                <div class="col-12">
+                                    <label for="login_password" class="form-label"><b>Password</b></label>
+                                    <input required style="border: 1px solid black;" type="password" class="form-control" id="login_password" placeholder="******">
+                                </div>
+    
+                                <div class="col-12 mt-4" style="text-align: center !important;">      
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" onclick="login()" id="login-btn" class="site-btn login-btn">Login<span id="login-btn-loader" style="display: none;" class="spinner-border loading-bh"></snap></button>
+                                    </div>
+                                </div>
+
+                                
+    
+                                
+                            </div>
+                        </form>
+                        <div class="switch-login">
+                            <a href="{% url 'register-list' %}" class="or-login">Or Create An Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Register Form Section End -->
+
+    {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    <script>
+        async function login() {
+            var form = document.getElementById('login_form');
+            if (form.reportValidity()){
+                startLoader()
+                const number = document.getElementById('login_number').value
+                const email = document.getElementById('login_email').value
+                const password = document.getElementById('login_password').value
+                const mode = document.getElementById('login_method').value
+                const login_btn_loader = document.getElementById('login-btn-loader')
+                // login_btn_loader.style.display = 'block'
+
+                try {
+                    const url = `{% url 'login-list' %}`;
+                    const csrftoken = '{{ csrf_token }}';
+                    const data = {
+                        'mode':mode,
+                        'number':number,
+                        'email':email,
+                        'password':password,
+                    };
+
+                    const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(data)
+                    });
+
+                    const response_data = await response.json();
+                    console.log(response_data)
+                    
+                    if (response_data.success) {
+                        window.location.href = "{% url 'account-list' %}";
+
+                    } else {
+                        if (response_data.not_user){
+                            document.getElementById('login_error_not_user').style.display = 'block'
+                            document.getElementById('wrong_password_error').style.display = 'none'
+                            document.getElementById('login_error').style.display = 'none'
+                            login_btn_loader.style.display = 'none'
+
+                        }
+
+                        else{
+                            if (response_data.wrong_password){
+                                document.getElementById('wrong_password_error').style.display = 'block'
+                                document.getElementById('login_error_not_user').style.display = 'none'
+                                document.getElementById('login_error').style.display = 'none'
+                            login_btn_loader.style.display = 'none'
+
+
+                            }
+                            else{
+                                document.getElementById('login_error').style.display = 'block'
+                                document.getElementById('login_error_not_user').style.display = 'none'
+                                document.getElementById('wrong_password_error').style.display = 'none'
+                            login_btn_loader.style.display = 'none'
+
+                            }
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error(error);
+                }
+
+            }
+            stopLoader()
+        }
+    </script>
+</body>
+
+</html>

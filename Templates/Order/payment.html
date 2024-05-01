@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sweet Mist</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+          <div class="card">
+            <div class="card-body">
+              <div class="row d-flex justify-content-center pb-5">
+                <div class="col-12">
+                  <div class="">
+                    <div class="py-4 d-flex justify-content-end">
+                      <h6><a href="#!">Cancel and return to website</a></h6>
+                    </div>
+                    <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
+                      <div class="p-2 me-3">
+                        <h4>Order Recap</h4>
+                      </div>
+                      {% for item in items %}
+                      <div class="p-2 d-flex">
+                        <div class="col-8">{{item.title}} x {{item.qty}}</div>
+                        <div class="ms-auto">₹ {{item.total_price}}</div>
+                      </div>
+                      {% endfor %}
+                      <div class="border-top px-2 mx-2"></div>
+                      <div class="p-2 d-flex pt-3">
+                        <div class="col-8">Subtotal</div>
+                        <div class="ms-auto"><b>₹ {{cart_total}}</b></div>
+                      </div>
+                      <div class="p-2 d-flex">
+                        <div class="col-8">
+                          Tax <span class="fa fa-question-circle text-dark"></span>
+                        </div>
+                        <div class="ms-auto"><b>₹ 00.00</b></div>
+                      </div>
+                      <div class="border-top px-2 mx-2"></div>
+                      <div class="p-2 d-flex pt-3">
+                        <div class="col-8"><b>Total</b></div>
+                        <div class="ms-auto"><b class="text-success">₹ {{cart_total}}</b></div>
+                      </div>
+                      <div class="p-2 d-flex pt-4 pb-0">
+                        <div class="col-12 alert alert-danger text-center" id="pg_error" style="border: 1px solid red; display: none;" role="alert">
+                          Error occured, please try again later!
+                        </div>
+                      </div>
+                      <div class="p-2 d-flex pt-4">
+                        <input type="hidden" id="pay_ses_id" value="">
+                        <input type="hidden" id="oid" value="">
+                        <input type="hidden" id="order_created" value="FALSE">
+                        <button id="renderBtn" style="display: none;"></button>
+                        <button onclick="create_order()" class="btn btn-primary btn-block btn-lg" 
+                          style="display: flex; justify-content: center; align-items: center;" 
+                          id="pay_btn">
+                          <span id="pay-text" style="display: block;">Proceed to payment</span>
+                          <span id="login-btn-loader" class="spinner-border text-center" style="display: none;"></snap></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-12 col-lg-6">
+                  <div class="m-3">
+                    <div class="py-4 d-flex flex-row">
+                      <h5><span class="far fa-check-square pe-2"></span><b>ELIGIBLE</b> |</h5>
+                      <span class="ps-2">Pay</span>
+                    </div>
+                    
+                    <hr />
+                    <div class="pt-2">
+  
+                      <form class="pb-3">
+                        <div class="d-flex flex-row pb-3">
+                          <div class="d-flex align-items-center pe-2">
+                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1"
+                              value="" aria-label="..." checked />
+                          </div>
+                          <div class="rounded border d-flex w-100 p-3 align-items-center">
+                            <p class="mb-0">
+                              <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>Visa Debit
+                              Card
+                            </p>
+                            <div class="ms-auto">************3456</div>
+                          </div>
+                        </div>
+        
+                        <div class="d-flex flex-row">
+                          <div class="d-flex align-items-center pe-2">
+                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel2"
+                              value="" aria-label="..." />
+                          </div>
+                          <div class="rounded border d-flex w-100 p-3 align-items-center">
+                            <p class="mb-0">
+                              <i class="fab fa-cc-mastercard fa-lg text-dark pe-2"></i>Mastercard
+                              Office
+                            </p>
+                            <div class="ms-auto">************1038</div>
+                          </div>
+                        </div>
+                      </form>
+                      <input type="button" onclick="create_order()" value="Proceed to payment" class="btn btn-primary btn-block btn-lg" />
+                    </div>
+                  </div>
+                </div> -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+      {% include "related_products.html" %}
+      {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    <script>
+      function create_order_old(){
+        '{% if cart_checkout == True %}'
+        window.location.href = "{% url 'order-list' %}?cart_checkout=True&payment_id=FREE";
+        '{% else %}'
+        window.location.href = "{% url 'order-list' %}?qty={{qty}}&product_id={{product_id}}&payment_id=FREE";
+        '{% endif %}'
+      }
+
+    </script>
+
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+    <script>
+      async function create_order(){
+        if (document.getElementById('order_created').value == 'TRUE'){
+          payment()
+        }
+        else{
+          try {
+              document.getElementById('pay-text').style.display = 'none';
+              document.getElementById('login-btn-loader').style.display = 'block';
+  
+              const url = `{% url 'order-list' %}`;
+              const csrftoken = '{{ csrf_token }}';
+              document.getElementById('pay_btn').disabled = true
+
+              const data = {
+                'cart_checkout':'{{cart_checkout}}',
+                'product_id':'{{product_id}}',
+                'qty':'{{qty}}',
+              };
+  
+              const response = await fetch(url, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': csrftoken
+                  },
+                  body: JSON.stringify(data)
+              });
+  
+              const response_data = await response.json();
+              console.log(response_data)
+  
+              if (response_data.success) {
+                document.getElementById('pay_ses_id').value = response_data.pg_session_id;
+                document.getElementById('oid').value = response_data.oid;
+                document.getElementById('order_created').value = 'TRUE';
+                payment()
+                // document.getElementById('renderBtn').click()
+  
+              } else {
+                  document.getElementById('pg_error').style.display = 'block'
+                  console.log(response_data.details)
+              }
+  
+  
+          } catch (error) {
+            document.getElementById('pg_error').style.display = 'block'
+              console.error(error);
+          }
+          document.getElementById('pay-text').style.display = 'block';
+          document.getElementById('login-btn-loader').style.display = 'none';
+        }
+      }
+    
+      async function check_payment_status(){
+        try {
+            const payment_session_id = document.getElementById('pay_ses_id').value
+            const oid = document.getElementById('oid').value
+
+            const url = `{% url 'check_payment-list' %}`;
+            const csrftoken = '{{ csrf_token }}';
+            const data = {
+              'payment_session_id':payment_session_id,
+              'oid':oid,
+            };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            });
+
+            const response_data = await response.json();
+            console.log(response_data)
+
+            if (response_data.success) {
+                const oid = response_data.oid
+                window.location.href = "{% url 'order_detail-list' %}?order_id="+ oid + "&order_placed=True";
+
+            } else {
+              document.getElementById('pay_btn').disabled = false
+              document.getElementById('pg_error').innerHTML = 'We are unable to fetch payment details, please make sure to complete payment first!'
+              document.getElementById('pg_error').style.display = 'block'
+                
+
+            }
+
+
+        } catch (error) {
+          document.getElementById('pg_error').innerHTML = 'We are unable to fetch payment details, please make sure to complete payment first!'
+          document.getElementById('pg_error').style.display = 'block'
+            console.error(error);
+        }
+        document.getElementById('pay-text').style.display = 'block';
+        document.getElementById('login-btn-loader').style.display = 'none';
+      }
+
+      const cashfree = Cashfree({
+          mode: "production",
+      });
+
+      function payment() {
+          let checkoutOptions = {
+              // paymentSessionId: "session_4m1frmbZLKNuyTU1Qpp4T9LRjeiyqpQw_frrxM80iqFQ6E4OlewxWT53btcpIg5bqtg8VEFBIxtXNfBAnv4nrKmUuCFjpPGuf5-1lTjenncC",
+              paymentSessionId: document.getElementById('pay_ses_id').value,
+              redirectTarget: "_modal",
+          };
+          cashfree.checkout(checkoutOptions).then((result) => {
+              if(result.error){
+                  // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
+                  console.log("User has closed the popup, Check for Payment Status");
+                  console.log(result.error);
+                  check_payment_status()
+              }
+              if(result.redirect){
+                  // This will be true when the payment redirection page couldnt be opened in the same window
+                  // This is an exceptional case only when the page is opened inside an inAppBrowser
+                  // In this case the customer will be redirected to return url once payment is completed
+                  check_payment_status()
+                  console.log("Payment will be redirected");
+              }
+              if(result.paymentDetails){
+                  // This will be called whenever the payment is completed irrespective of transaction status
+                  console.log("Payment has been completed, Check for Payment Status");
+                  console.log(result.paymentDetails.paymentMessage);
+                  check_payment_status()
+              }
+          });
+      }
+  
+    </script>
+
+</body>
+
+</html>

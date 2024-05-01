@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sweet Mist</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+    <style>
+        .custom-link {
+            color: inherit; /* Inherit text color from parent */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .custom-link:hover {
+            color: inherit; /* Inherit text color on hover */
+            text-decoration: none; /* Remove underline on hover */
+        }
+    </style>
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="#"><i class="fa fa-home"></i> Home</a>
+                        <span>Login</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Form Section Begin -->
+
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            {% if order_placed == True %}
+            <div class="alert alert-success" role="alert" id="successralert">
+                Order Placed Successfully!
+            </div>
+            {% endif %}
+
+            {% if order_data.paid == False %}
+            <div class="alert alert-warning" role="alert" id="warningalert">
+                Payment in Progress! Kindly settle if pending, or ignore if already paid!
+                <!-- <button class="btn btn-success">Pay Now</button> -->
+            </div>
+            <div class="alert alert-danger" role="alert" id="pg_error" style="display: none;">
+            </div>
+            <button id="pay_btn" class="btn btn-success w-100 mb-3 p-2" onclick="payment()"><b>Pay Now</b></button>
+            {% endif %}
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 gap-3">
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="d-flex align-items-center mb-1">
+                        <h5 class="mb-0">Order #{{order_id}}</h5>
+                        {% if order_data.paid == True %}
+                        <span class="badge bg-success me-2 ms-2 rounded-pill">Paid</span>
+                        {% else %}
+                        <span class="badge bg-danger me-2 ms-2 rounded-pill">Unpaid</span>
+                        {% endif %}
+                        <span class="badge bg-info rounded-pill">Ready to Pickup</span>
+                    </div>
+                    <!-- <p class="mt-1 mb-3">Aug 17, 2024, 5:48 (ET)</p> -->
+                    <p class="mt-1 mb-3">{{order_date}}</p>
+                </div>
+                <div class="d-flex align-content-center flex-wrap gap-2">
+                    <a href="{% url 'invoice-list' %}?order_id={{order_id}}" class="btn btn-primary text-white">Get invoice</a>
+                </div>
+            </div>
+
+            <!-- Order Details Table -->
+
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="card mb-5 mt-2">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title m-0">Order details</h5>
+                        </div>
+                        <div class="card-datatable table-responsive">
+                            <table class="datatables-order-details table">
+                                <thead>
+                                    <tr>
+                                        <th class="w-50">products</th>
+                                        <th>price</th>
+                                        <th>qty</th>
+                                        <th>total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr class="odd">
+                                        <td class="sorting_1">
+                                            <a href="{% url 'prod_details-list' %}?slug={{item.slug}}" class="custom-link">
+                                                <div class="row">
+                                                    <div class="col-6 col-lg-3 col-md-3">
+                                                        <img src="{{item.image_1}}" class="rounded-2">
+                                                    </div>
+                                                    <div class="col-6 col-lg-9 col-md-9">
+                                                        <span class="text-heading fw-medium">
+                                                            {{item.title}}</span>
+                                                        <small class="text-truncate d-sm-block">{{item.category}}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+
+                                        <td class="dtr-hidden" style>
+                                            <span>₹ {{item.price}}</span>
+                                        </td>
+                                        <td class="dtr-hidden" style>
+                                            <span>{{item.qty}}</span>
+                                        </td>
+                                        <td class="dtr-hidden" style>
+                                            <span>₹ {{item.total_price}}</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+
+
+                                </tbody>
+                            </table>
+
+                            <div class="d-flex justify-content-end align-items-center m-4 p-1">
+                                <div class="order-calculations">
+                                    <div class="d-flex justify-content-start gap-4 mb-2">
+                                        <span class="w-px-100 text-heading">Subtotal:</span>
+                                        <h6 class="mb-0">₹ {{order_total}}</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-start gap-4 mb-2">
+                                        <span class="w-px-100 text-heading">Discount:</span>
+                                        <h6 class="mb-0">₹ 00.00</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-start gap-4 mb-2">
+                                        <span class="w-px-100 text-heading">Tax:</span>
+                                        <h6 class="mb-0">₹ 00.00</h6>
+                                    </div>
+                                    <div class="d-flex justify-content-start gap-4">
+                                        <h6 class="w-px-100 mb-0">Total:</h6>
+                                        <h6 class="mb-0">₹ {{order_total}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-5 mt-2">
+                        <div class="card-header">
+                            <h5 class="card-title m-0">Shipping activity</h5>
+                        </div>
+                        <div class="card-body mt-3">
+                            <ul class="timeline pb-0 mb-0">
+                                <li class="timeline-item timeline-item-transparent border-primary">
+                                    <span class="timeline-point timeline-point-primary"></span>
+                                    <div class="timeline-event">
+                                        <div class="timeline-header mb-1">
+                                            <h6 class="mb-0">Order was placed (Order ID: #32543)</h6>
+                                            <small class="text-muted">Tuesday 11:29 AM</small>
+                                        </div>
+                                        <p class="mt-1 mb-3">Your order has been placed successfully</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item timeline-item-transparent border-primary">
+                                    <span class="timeline-point timeline-point-primary"></span>
+                                    <div class="timeline-event">
+                                        <div class="timeline-header mb-1">
+                                            <h6 class="mb-0">Pick-up</h6>
+                                            <small class="text-muted">Wednesday 11:29 AM</small>
+                                        </div>
+                                        <p class="mt-1 mb-3">Pick-up scheduled with courier</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item timeline-item-transparent border-primary">
+                                    <span class="timeline-point timeline-point-primary"></span>
+                                    <div class="timeline-event">
+                                        <div class="timeline-header mb-1">
+                                            <h6 class="mb-0">Dispatched</h6>
+                                            <small class="text-muted">Thursday 11:29 AM</small>
+                                        </div>
+                                        <p class="mt-1 mb-3">Item has been picked up  by courier</p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="timeline-item timeline-item-transparent border-primary">
+                                    <span
+                                        class="timeline-point timeline-point-primary"></span>
+                                    <div class="timeline-event">
+                                        <div
+                                            class="timeline-header mb-1">
+                                            <h6 class="mb-0">Package
+                                                arrived</h6>
+                                            <small
+                                                class="text-muted">Saturday
+                                                15:20 AM</small>
+                                        </div>
+                                        <p class="mt-1 mb-3">Package
+                                            arrived at an Amazon
+                                            facility, NY</p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="timeline-item timeline-item-transparent">
+                                    <span
+                                        class="timeline-point timeline-point-primary"></span>
+                                    <div class="timeline-event">
+                                        <div
+                                            class="timeline-header mb-1">
+                                            <h6 class="mb-0">Dispatched
+                                                for delivery</h6>
+                                            <small
+                                                class="text-muted">Today
+                                                14:12 PM</small>
+                                        </div>
+                                        <p class="mt-1 mb-3">Package
+                                            has left an Amazon
+                                            facility, NY</p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="timeline-item timeline-item-transparent border-transparent pb-0">
+                                    <span
+                                        class="timeline-point timeline-point-secondary"></span>
+                                    <div
+                                        class="timeline-event pb-0">
+                                        <div
+                                            class="timeline-header mb-1">
+                                            <h6 class="mb-0">Delivery</h6>
+                                        </div>
+                                        <p class="mt-1 mb-3">Package
+                                            will be delivered by
+                                            tomorrow</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <!-- <div class="card mb-5 mt-2">
+                        <div class="card-body">
+                            <h5 class="card-title mb-6">Customer
+                                details</h5>
+                            <div
+                                class="d-flex justify-content-start align-items-center mb-6">
+                                <div class="avatar me-3">
+                                    <img
+                                        src="../assets/img/avatars/1.png"
+                                        alt="Avatar"
+                                        class="rounded-circle">
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a
+                                        href="app-user-view-account.html">
+                                        <h6 class="mb-0">Shamus
+                                            Tuttle</h6>
+                                    </a>
+                                    <span>Customer ID: #58909</span></div>
+                            </div>
+                            <div
+                                class="d-flex justify-content-start align-items-center mb-6">
+                                <span
+                                    class="avatar rounded-circle bg-label-success me-3 d-flex align-items-center justify-content-center"><i
+                                        class='ri-shopping-cart-line ri-24px'></i></span>
+                                <h6 class="text-nowrap mb-0">12
+                                    Orders</h6>
+                            </div>
+                            <div
+                                class="d-flex justify-content-between">
+                                <h6 class="mb-1">Contact info</h6>
+                            </div>
+                            <p class="mb-1">Email:
+                                Shamus889@yahoo.com</p>
+                            <p class="mb-0">Mobile: +1 (609)
+                                972-22-22</p>
+                        </div>
+                    </div> -->
+
+                    <div class="card mb-5 mt-2">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-1">Shipping address</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- <p class="mb-0">45 Roker Terrace <br>Latheronwheel <br>KW5 8NW,London <br>UK</p> -->
+                            <p class="mb-0">{{user_data.primary_address}}<br>{{user_data.secondary_address}}<br>
+                                {{user_data.city}}, {{user_data.state}},<br>
+                                {{user_data.country}},<br>
+                                {{user_data.pincode}}.<br>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-5 mt-2">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-1">Billing address</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-6">{{user_data.primary_address}}<br>{{user_data.secondary_address}}<br>
+                                {{user_data.city}}, {{user_data.state}},<br>
+                                {{user_data.country}},<br>
+                                {{user_data.pincode}}.<br>
+                            </p>
+                            <h5 class="mb-0 pb-1">Mastercard</h5>
+                            <p class="mb-0">Card Number:
+                                ******4291</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- / Content -->
+    </div>
+    <!-- Content wrapper -->
+
+
+    {% include "related_products.html" %}
+    {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+
+    {% if order_placed == True %}
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        var duration = 10 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    
+        function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+        }
+    
+        var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+    
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+    
+        var particleCount = 50 * (timeLeft / duration);
+        // since particles fall down, start a bit higher than random
+        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
+    </script>
+    {% endif %}
+
+    {% if order_data.paid == False %}
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+        async function check_payment_status(){
+            try {
+                const payment_session_id = '{{order_data.payment_session_id}}'
+                const oid = '{{order_data.order_id}}'
+
+                const url = `{% url 'check_payment-list' %}`;
+                const csrftoken = '{{ csrf_token }}';
+                const data = {
+                'payment_session_id':payment_session_id,
+                'oid':oid,
+                };
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const response_data = await response.json();
+                console.log(response_data)
+
+                if (response_data.success) {
+                    const oid = response_data.oid
+                    window.location.href = "{% url 'order_detail-list' %}?order_id="+ oid + "&order_placed=True";
+
+                } else {
+                document.getElementById('pay_btn').disabled = false
+                document.getElementById('pg_error').innerHTML = 'We are unable to fetch payment details, please make sure to complete payment first!'
+                document.getElementById('pg_error').style.display = 'block'
+                    
+
+                }
+
+
+            } catch (error) {
+            document.getElementById('pg_error').innerHTML = 'We are unable to fetch payment details, please make sure to complete payment first!'
+            document.getElementById('pg_error').style.display = 'block'
+                console.error(error);
+            }
+            document.getElementById('pay-text').style.display = 'block';
+            document.getElementById('login-btn-loader').style.display = 'none';
+        }
+
+        const cashfree = Cashfree({
+            mode: "production",
+        });
+
+        function payment() {
+            let checkoutOptions = {
+                // paymentSessionId: "session_4m1frmbZLKNuyTU1Qpp4T9LRjeiyqpQw_frrxM80iqFQ6E4OlewxWT53btcpIg5bqtg8VEFBIxtXNfBAnv4nrKmUuCFjpPGuf5-1lTjenncC",
+                paymentSessionId: '{{order_data.payment_session_id}}',
+                redirectTarget: "_modal",
+            };
+            cashfree.checkout(checkoutOptions).then((result) => {
+                if(result.error){
+                    // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
+                    console.log("User has closed the popup, Check for Payment Status");
+                    console.log(result.error);
+                    check_payment_status()
+                }
+                if(result.redirect){
+                    // This will be true when the payment redirection page couldnt be opened in the same window
+                    // This is an exceptional case only when the page is opened inside an inAppBrowser
+                    // In this case the customer will be redirected to return url once payment is completed
+                    check_payment_status()
+                    console.log("Payment will be redirected");
+                }
+                if(result.paymentDetails){
+                    // This will be called whenever the payment is completed irrespective of transaction status
+                    console.log("Payment has been completed, Check for Payment Status");
+                    console.log(result.paymentDetails.paymentMessage);
+                    check_payment_status()
+                }
+            });
+        }
+    
+    </script>
+    {% endif %}
+
+    
+</body>
+
+</html>

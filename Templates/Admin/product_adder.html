@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Product Adder Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    input,textarea{
+      background-color: rgb(63, 60, 60) !important;
+      color: #ffffff !important;
+    }
+    input::placeholder,textarea::placeholder {
+      color: #ffffff9e !important;
+    }
+    .container {
+      background-color: #ffffff;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 5px;
+    }
+    .btn-primary {
+      border: none;
+      border-radius: 5px;
+    }
+    .required-field::before {
+      content: " *";
+      color: red;
+    }
+    .selected {
+      border: 2px solid green;
+      padding: 3px 3px 3px 3px;
+    }
+    .success {
+      border: 2px solid green;
+    }
+    .error {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body style="background-color: rgb(63, 60, 60); color: #ffffff;">
+  <div class="container" style="background-color: rgb(17, 17, 17); border: 2px solid white;">
+    <h2 class="text-center">Product Adder Form</h2>
+    {% if success == 1 %}
+      <div class="alert alert-success" role="alert">
+        Product added successfully!
+      </div>
+    {% endif %}
+    {% if error == 1 %}
+      <div class="alert alert-danger" role="alert">
+        Product was not added!
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Title<span class="required-field"></span></label>
+        <input required type="text" class="form-control" id="title" name="title" placeholder="Enter product title">
+      </div>
+      <div class="row align-items-center">
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="sku">SKU<span class="required-field"></span></label>
+            <input required type="text" class="form-control" id="sku" name="sku" placeholder="Enter product SKU">
+            <span id="skuMessage"></span>
+          </div>
+        </div>
+        <div class="col-sm-4 mt-sm-2">
+          <button type="button" class="btn btn-primary btn-block" onclick="checkSKU()">Check SKU</button>
+        </div>
+      </div>
+      <div class="form-group mt-4 mt-sm-0">
+        <label for="category">Category<span class="required-field"></span></label>
+        <input required type="text" class="form-control" id="category" name="category" placeholder="Enter product category">
+      </div>
+      <div class="form-group">
+        <label for="tags">Tags<span class="required-field"></span></label>
+        <input required type="text" class="form-control" id="tags" name="tags" placeholder="Enter product tags">
+      </div>
+      <div class="form-group">
+        <label for="price">Price<span class="required-field"></span></label>
+        <input required type="number" step="any" class="form-control" id="price" name="price" placeholder="Enter product price">
+      </div>
+      <div class="form-group">
+        <label for="info">Info<span class="required-field"></span></label>
+        <textarea required class="form-control" id="info" name="info" rows="4" placeholder="Enter product info"></textarea>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="image_1">Image 1<span class="required-field"></span></label>
+                <input required type="file" class="form-control" id="image_1" onchange="highlightBorder('image_1')" name="image_1" accept="image/*">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="image_2">Image 2</label>
+                <input type="file" class="form-control" id="image_2" onchange="highlightBorder('image_2')" name="image_2" accept="image/*">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="image_3">Image 3</label>
+                <input type="file" class="form-control" id="image_3" onchange="highlightBorder('image_3')" name="image_3" accept="image/*">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="image_4">Image 4</label>
+                <input type="file" class="form-control" id="image_4" onchange="highlightBorder('image_4')" name="image_4" accept="image/*">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="image_5">Image 5</label>
+                <input type="file" class="form-control" id="image_5" onchange="highlightBorder('image_5')" name="image_5" accept="image/*">
+            </div>
+        </div>
+
+      </div>
+      <button type="submit" class="my-3 btn btn-success btn-block">Add Product</button>
+    </form>
+  </div>
+
+  <script>
+    function highlightBorder(inputId) {
+      const imageInput = document.getElementById(inputId);
+      if (imageInput.files.length > 0) {
+        imageInput.classList.add("selected");
+      } else {
+        imageInput.classList.remove("selected");
+      }
+    }
+
+    async function checkSKU() {
+      const skuInput = document.getElementById("sku");
+      const skuMessage = document.getElementById("skuMessage");
+
+      const sku = skuInput.value;
+
+      try {
+        const response = await fetch(`{% url 'api_check_sku' %}?sku=${sku}`);
+        const data = await response.json();
+
+        if (data.success) {
+          skuMessage.textContent = "SKU is available.";
+          skuInput.classList.remove("error");
+          skuInput.classList.add("success");
+        } else {
+          skuMessage.textContent = "SKU already exists.";
+          skuInput.classList.remove("success");
+          skuInput.classList.add("error");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
