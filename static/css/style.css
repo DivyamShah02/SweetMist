@@ -311,7 +311,7 @@ ol {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	border-bottom: 1px solid #e5e5e5;
+	/* border-bottom: 1px solid #e5e5e5; */
 }
 
 .header-top .ht-left {
@@ -322,7 +322,7 @@ ol {
 	font-size: 16px;
 	color: #252525;
 	float: left;
-	border-right: 1px solid #E5E5E5;
+	/* border-right: 1px solid #E5E5E5; */
 	padding-top: 15px;
 	padding-bottom: 15px;
 	padding-right: 20px;
@@ -356,7 +356,7 @@ ol {
 	color: #252525;
 	display: inline-block;
 	padding-left: 20px;
-	border-left: 1px solid #e5e5e5;
+	/* border-left: 1px solid #e5e5e5; */
 	padding-top: 18px;
 	padding-bottom: 15px;
 }
@@ -376,7 +376,7 @@ ol {
 	padding-right: 20px;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	border-right: 1px solid #e5e5e5;
+	/* border-right: 1px solid #e5e5e5; */
 }
 
 .header-top .ht-right .top-social a {
@@ -1690,7 +1690,7 @@ ol {
 -----------------------*/
 
 .product-shop {
-	padding-top: 80px;
+	/* padding-top: 80px; */
 	padding-bottom: 80px;
 }
 

@@ -25,7 +25,7 @@
 
     <style>
         .green_bg{
-            background-color: green;
+            background-color: var(--secondary-color);
         }
     </style>
 </head>
@@ -201,9 +201,9 @@
                         <div class="col-lg-6">
                             <div class="product-details">
                                 <div class="pd-title">
-                                    <span>{{product_data.category}}</span>
-                                    <span>{{product_data.slug}}</span>
-                                    <h3>{{product_data.title}}</h3>
+                                    <span style="color: var(--primary-color);">{{product_data.category}}</span>
+                                    <!-- <span>{{product_data.slug}}</span> -->
+                                    <h3 style="color: var(--secondary-color);"><b>{{product_data.title}}<b></h3>
                                     <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <div class="pd-rating">
@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="pd-desc">
                                     <p>{{product_data.info}}</p>
-                                    <h4>₹ {{product_data.price}}<span>{{product_data.high_price}}</span></h4>
+                                    <h4>₹ {{product_data.price}}<span style="color: var(--primary-color);">₹ {{product_data.high_price}}</span></h4>
                                 </div>
                                 <!-- <div class="pd-color">
                                     <h6>Color</h6>
@@ -255,12 +255,12 @@
                                 </div> -->
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="number" value="1" id="qty">
+                                        <input type="number" value="1" min="1" id="qty">
                                     </div>
                                 </div>
                                 <div>
                                     <button onclick="add_to_cart()" class="primary-btn pd-cart w-100 mb-3" id="add_to_cart">Add To Cart</button>
-                                    <button class="primary-btn pd-cart w-100 mb-3" style="background-color: green; display: none;" id="added_to_cart">Added</button>
+                                    <button class="primary-btn pd-cart w-100 mb-3 green_bg" style="display: none;" id="added_to_cart">Added</button>
                                 </div>
                                 <div>
                                     <button onclick="buy_now()" class="primary-btn w-100 green_bg mb-3" id="buy_now_btn">Buy Now</button>

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product
+from .models import Product, Category
 from rest_framework.permissions import AllowAny
 from .serializers import ProductSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -15,11 +15,23 @@ class Shop(ViewSet):
     def list(self, request):
         log_access(request)
         try:
-            all_prods = Product.objects.all()
+            category = request.query_params.get('category')
+            print(category)
+            print('sghrtshtshtht')
+            if category:
+                all_prods = Product.objects.filter(category=category)
+                if len(all_prods) == 0:
+                    all_prods = Product.objects.all()
+            else:
+                all_prods = Product.objects.all()
+
             serializer = ProductSerializer(all_prods,many=True)
+            categories = Category.objects.all()
             
             data = {
-                'products':serializer.data
+                'products':serializer.data,
+                'categories':categories,
+                'category':category,
             }
             
             return render(request, 'Product/shop.html', data, status=status.HTTP_200_OK)

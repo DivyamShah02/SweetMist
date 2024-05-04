@@ -10,14 +10,12 @@ class Product(models.Model):
     category = models.CharField(max_length=100,null=True)
     tags = models.CharField(max_length=255,null=True)
     info = models.TextField(null=True)
-    
-    price = models.CharField(max_length=30,null=True)
-    high_price = models.CharField(max_length=30,null=True)
-    discounted_price = models.CharField(max_length=30,null=True)
-    discount_rate = models.CharField(max_length=3,null=True)
-    
-    
-    
+
+    price = models.CharField(max_length=30,null=True) #actual selling price
+    high_price = models.CharField(max_length=30,null=True) #high price that will be canceled
+    discounted_price = models.CharField(max_length=30,null=True) #total amt of discount
+    discount_rate = models.CharField(max_length=3,null=True) #rate of discount
+
     image_1 = models.ImageField(upload_to='Product_Img',null=True)
     image_2 = models.ImageField(upload_to='Product_Img',null=True)
     image_3 = models.ImageField(upload_to='Product_Img',null=True)
@@ -28,3 +26,7 @@ class Product(models.Model):
     
     def __str__(self):
         return self.slug
+
+class Category(models.Model):
+    category = models.CharField(max_length=100,null=True)
+
