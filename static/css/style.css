@@ -1,5 +1,6 @@
 :root {
 	--primary-color: #6a2249;
+	--light-primary-color: #6a224857;
 	--secondary-color: #018e80;
   }
 
@@ -69,17 +70,45 @@ textarea:focus {
 	outline: none;
 }
 
+a,
 a:hover,
 a:focus {
-	text-decoration: none;
-	outline: none;
-	color: #fff;
+	text-decoration: none !important;
+	outline: none !important;
+	/* color: #fff !important; */
 }
 
 ul,
 ol {
 	padding: 0;
 	margin: 0;
+}
+
+.text-sm-prm{
+	color: var(--primary-color) !important; 
+	font-weight: 700 !important;
+}
+
+.btn-sm-prm{
+	background-color: var(--primary-color) !important;
+	color: #fff !important;
+}
+
+.btn-sm-prm-outline{
+	border: solid 2px var(--primary-color) !important;
+	color: var(--primary-color) !important;
+	font-weight: 500 !important;
+}
+
+.btn-sm-prm-outline:hover{
+	background-color: var(--primary-color) !important;
+	color: #fff !important;
+
+}
+
+.label-sm-prm{
+	color: var(--primary-color) !important;
+
 }
 
 /*---------------------
@@ -2614,7 +2643,7 @@ ol {
 -----------------------*/
 
 .shopping-cart {
-	padding-top: 80px;
+	/* padding-top: 80px; */
 	padding-bottom: 60px;
 }
 
@@ -2876,12 +2905,12 @@ ol {
 -----------------------*/
 
 .checkout-section {
-	padding-top: 80px;
+	/* padding-top: 80px; */
 	padding-bottom: 80px;
 }
 
 .checkout-content {
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 
 .checkout-content .content-btn,
@@ -4070,6 +4099,9 @@ ol {
 /* Large Device: 480px */
 
 @media only screen and (max-width: 767px) {
+	.order-detail-img{
+		width: 50%;
+	}
 	.instagram-photo .insta-item {
 		width: 50%;
 		height: 300px;
@@ -4241,6 +4273,9 @@ ol {
 /* Small Device: 320px */
 
 @media only screen and (max-width: 479px) {
+	.order-detail-img{
+		width: 50%;
+	}
 	.instagram-photo .insta-item {
 		width: 100%;
 	}

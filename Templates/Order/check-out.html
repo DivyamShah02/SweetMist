@@ -34,8 +34,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./shop.html">Shop</a>
+                        <a href="{% url 'home-list' %}"><i class="fa fa-home"></i> Home</a>
+                        <a href="{% url 'shop-list' %}">Shop</a>
                         <span>Check Out</span>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="checkout-section spad">
+    <section class="checkout-section" style="padding-top: 10px;">
         <div class="container">
             <form id="checkout-form" class="checkout-form">
                 <div class="row">
@@ -60,79 +60,76 @@
                     </div>
                     {% if user_logged_in == True %}
                     <div class="col-lg-6">
-                        <div class="checkout-content">
-                            <a href="{% url 'login-list' %}" class="content-btn">Click Here To Login</a>
-                        </div>
-                        <h4>Biiling Details</h4>
+                        <h4 class="text-sm-prm">Billing Details</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="email">Email Address<span>*</span></label>
+                                <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="email" value="{{user_data.email}}" readonly style="background-color: rgba(128, 128, 128, 0.432);">
                             </div>
                             <div class="col-lg-6">
-                                <label for="phone">Phone number<span>*</span></label>
+                                <label class="label-sm-prm" for="phone">Phone number<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="phone" value="{{user_data.number}}" readonly style="background-color: rgba(128, 128, 128, 0.432);">
                             </div>
                             <div class="col-lg-6">
-                                <label for="first_name">First Name<span>*</span></label>
+                                <label class="label-sm-prm" for="first_name">First Name<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="first_name" value="{{user_data.first_name}}">
                             </div>
                             <div class="col-lg-6">
-                                <label for="last_name">Last Name<span>*</span></label>
+                                <label class="label-sm-prm" for="last_name">Last Name<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="last_name" value="{{user_data.last_name}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="street">Primary Address<span>*</span></label>
+                                <label class="label-sm-prm" for="street">Primary Address<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="primary_address" class="street-first" value="{{user_data.primary_address}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="street">Secondary Address<span>*</span></label>
+                                <label class="label-sm-prm" for="street">Secondary Address<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="secondary_address" class="street-first" value="{{user_data.secondary_address}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="pincode">Postcode / ZIP (optional)</label>
+                                <label class="label-sm-prm" for="pincode">Postcode / ZIP<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="pincode" value="{{user_data.pincode}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="city">Town / City<span>*</span></label>
+                                <label class="label-sm-prm" for="city">Town / City<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="city" value="{{user_data.city}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="state">State<span>*</span></label>
+                                <label class="label-sm-prm" for="state">State<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="state" value="{{user_data.state}}">
                             </div>
                             <div class="col-lg-12">
-                                <label for="country">Country<span>*</span></label>
+                                <label class="label-sm-prm" for="country">Country<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="country" value="{{user_data.country}}">
                             </div>
 
-                            <div class="col-lg-12">
+                            <!-- <div class="col-lg-12">
                                 <div class="create-item">
-                                    <label for="acc-create">
+                                    <label class="label-sm-prm" for="acc-create">
                                         Save changed details?
                                         <input type="checkbox" id="save-details">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     {% else %}
                     <div class="col-lg-6">
                         <div class="checkout-content">
-                            <a href="{% url 'login-list' %}" class="content-btn">Click Here To Login</a>
+                            <a href="{% url 'login-list' %}" class="btn btn-sm-prm-outline w-100">Have an account? Login</a>
                         </div>
-                        <h4>Biiling Details</h4>
+                        <h4 class="text-sm-prm">Biiling Details</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <label for="email">Email Address<span>*</span></label>
+                                <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
                                 <input required type="email" id="email">
                             </div>
                             <div class="col-lg-6">
-                                <label for="pass">Password<span>*</span></label>
+                                <label class="label-sm-prm" for="pass">Password<span style="color:black !important;"> *</span></label>
                                 <input required type="password" id="pass">
                             </div>
-                            <label for="number">Phone number<span>*</span></label>
+                            <label class="label-sm-prm" for="number">Phone number<span style="color:black !important;"> *</span></label>
                             <div class="col-lg-6 mb-4">
                                 <div class="input-group">
                                     <span class="input-group-text rounded-0">+91</span>
@@ -147,56 +144,56 @@
                                 <button type="button" disabled style="width: 100%; display: none;" class="btn btn-outline-success" id="verify_loader"><span class="spinner-border loading-bh"></snap></button>
                             </div>
                             <div class="col-lg-6">
-                                <label for="fir">First Name<span>*</span></label>
+                                <label class="label-sm-prm" for="fir">First Name<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="first_name">
                             </div>
                             <div class="col-lg-6">
-                                <label for="last">Last Name<span>*</span></label>
+                                <label class="label-sm-prm" for="last">Last Name<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="last_name">
                             </div>
                             <div class="col-lg-12">
-                                <label for="street">Primary Address<span>*</span></label>
+                                <label class="label-sm-prm" for="street">Primary Address<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="primary_address" class="street-first">
                             </div>
                             <div class="col-lg-12">
-                                <label for="street">Secondary Address<span>*</span></label>
+                                <label class="label-sm-prm" for="street">Secondary Address<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="secondary_address" class="street-first">
                             </div>
                             <div class="col-lg-12">
-                                <label for="zip">Postcode / ZIP (optional)</label>
+                                <label class="label-sm-prm" for="zip">Postcode / ZIP<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="pincode">
                             </div>
                             <div class="col-lg-12">
-                                <label for="town">Town / City<span>*</span></label>
+                                <label class="label-sm-prm" for="town">Town / City<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="city">
                             </div>
                             <div class="col-lg-12">
-                                <label for="town">State<span>*</span></label>
+                                <label class="label-sm-prm" for="town">State<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="state">
                             </div>
                             <div class="col-lg-12">
-                                <label for="cun">Country<span>*</span></label>
+                                <label class="label-sm-prm" for="cun">Country<span style="color:black !important;"> *</span></label>
                                 <input required type="text" id="country">
                             </div>
 
-                            <div class="col-lg-12">
+                            <!-- <div class="col-lg-12">
                                 <div class="create-item">
-                                    <label for="acc-create">
+                                    <label class="label-sm-prm" for="acc-create">
                                         Save changed details?
                                         <input type="checkbox" id="save-details">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     {% endif %}
                     <div class="col-lg-6">
-                        <div class="checkout-content">
+                        <!-- <div class="checkout-content">
                             <input type="text" placeholder="Enter Your Coupon Code">
-                        </div>
+                        </div> -->
                         <div class="place-order">
-                            <h4>Your Order</h4>
+                            <h4 class="text-sm-prm">Your Order</h4>
                             <div class="order-total">
                                 <ul class="order-table">
                                     <li>Product <span>Total</span></li>
@@ -208,22 +205,22 @@
                                     <li class="fw-normal">Subtotal <span>₹ {{cart_total}}</span></li>
                                     <li class="total-price">Total <span>₹ {{cart_total}}</span></li>
                                 </ul>
-                                <div class="payment-check">
+                                <!-- <div class="payment-check">
                                     <div class="pc-item">
-                                        <label for="pc-check">
+                                        <label class="label-sm-prm" for="pc-check">
                                             Cheque Payment
                                             <input type="checkbox" id="pc-check">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="pc-item">
-                                        <label for="pc-paypal">
+                                        <label class="label-sm-prm" for="pc-paypal">
                                             Paypal
                                             <input type="checkbox" id="pc-paypal">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-                                </div>
+                                </div> -->
                                 {% if cart_checkout == True %}
                                 <div class="order-btn">
                                     <!-- <a style="color: white;" href="{ url 'place_order-list' %}?cart_checkout=True" class="site-btn place-btn">Place Order</a> -->
@@ -262,6 +259,7 @@
                         <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
                         <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
                         <input id="token" type="hidden">
+                        <span id="otp_temp"></span>
             
                         <div class="otp-field mb-4">
                             <input id="otp_field_1" type="number"/>
@@ -523,6 +521,11 @@
                             
                             if (response_data.success) {
                                 console.log('Registered')
+                                '{% if cart_checkout == True %}'
+                                window.location.href = "{% url 'payment-list' %}?cart_checkout=True";
+                                '{% else %}'
+                                window.location.href = "{% url 'payment-list' %}?qty={{qty}}&product_id={{product_id}}";
+                                '{% endif %}'
                                 // $('#otpModal').modal('hide')
                                 // $('#registerModal').modal('show')
                                 // register_btn_loader.style.display = 'none'
@@ -625,6 +628,8 @@
                             console.log(response_data.otp_token)
                             otp_token = response_data.otp_token
                             console.log(token_inpt.value)
+
+                            document.getElementById('otp_temp').innerHTML = response_data.otp
 
                             // varify_button.disabled = true
                             // number_ele.style.border = '2px green solid'

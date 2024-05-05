@@ -34,8 +34,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./shop.html">Shop</a>
+                        <a href="{% url 'home-list' %}"><i class="fa fa-home"></i> Home</a>
+                        <a href="{% url 'shop-list' %}">Shop</a>
                         <span>Shopping Cart</span>
                     </div>
                 </div>
@@ -45,9 +45,24 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
+    <section class="shopping-cart">
         <div class="container">
-            <div class="row gap-5">
+            <div class="row gap-lg-5">
+                {% if empty_cart == True %}
+                <div class="card text-center">
+                    <div class="card-header text-sm-prm" style="background-color: var(--light-primary-color) !important;">
+                      Empty Cart
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title text-sm-prm">You haven't added any products yet.</h5>
+                      <p class="card-text">It seems like you're new here. Start exploring our products and place your first order now!</p>
+                      <a href="{% url 'shop-list' %}" class="btn btn-sm-prm">Shop Now</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                      Explore our products
+                    </div>
+                </div>
+                {% else %}
                 <div class="col-lg-12">
                     <div class="card border shadow-0">
                       <div class="m-4">
@@ -104,17 +119,18 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="row">
+                    <div class="row gap-3 gap-lg-0">
                         <div class="col-lg-4">
-                            <!-- <div class="cart-buttons">
-                                <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                                <a href="#" class="primary-btn up-cart" onclick="update_cart()">Update cart</a>
-                            </div> -->
+                            <div class="cart-buttons">
+                                <a href="{% url 'shop-list' %}" class="btn btn-sm-prm-outline w-100">Continue shopping</a>
+                                <!-- <a href="#" class="primary-btn up-cart" onclick="update_cart()">Update cart</a> -->
+                            </div>
                             <div class="discount-coupon">
-                                <h6>Discount Codes</h6>
+                                <h6 class="text-sm-prm">Discount Codes</h6>
                                 <form action="#" class="coupon-form">
-                                    <input type="text" placeholder="Enter your codes">
-                                    <button type="submit" class="site-btn coupon-btn">Apply</button>
+                                    <input type="text" class="text-sm-prm" placeholder="Enter your codes">
+                                    <button type="button" onclick="document.getElementById('not_found').style.display='block'" class="site-btn coupon-btn btn-sm-prm-outline">Apply</button>
+                                    <label class="text-sm-prm" style="display: none;" id="not_found"><u>Coupon not found!</u></label>
                                 </form>
                             </div>
                         </div>
@@ -129,6 +145,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>

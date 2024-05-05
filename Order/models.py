@@ -20,16 +20,25 @@ class Order(models.Model):
     order_date_time = models.DateTimeField(default=timezone.now,null=True)
     active = models.BooleanField(default=False)
     email_sent = models.BooleanField(default=False)
+    
+    STATUS_CHOICES = (
+        ('UP', 'Unpaid'),
+        ('PL', 'Order Placed'),
+        ('IT', 'In Transit'),
+        ('DV', 'Delivered'),
+        # ('OS', 'Other Status'),
+    )
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='UP')
 
     shipment = models.BooleanField(default=False)
-    payment_id = models.CharField(max_length=15)
+    # payment_id = models.CharField(max_length=15)
     
     paid = models.BooleanField(default=False)
     payment_session_id = models.CharField(max_length=255)
     pg_order_id = models.CharField(max_length=255)
     pg_order_status = models.CharField(max_length=255)
     pg_payment_id = models.CharField(max_length=255)
-    pg_payment_group = models.CharField(max_length=255)
+    pg_payment_group = models.CharField(max_length=255, null=True)
     
 
 

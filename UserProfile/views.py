@@ -103,10 +103,11 @@ class GenerateOTPViewSet(ViewSet):
             new_otp = Otp(session_id=session_token, otp=str(gen_otp), token=token, number=number, attempts=1)
             new_otp.save()
             print(gen_otp)
-            send_otp_mail(otp=gen_otp, to_email=email)
+            # send_otp_mail(otp=gen_otp, to_email=email)
 
             
-            return Response({'success': True, 'otp_token': token}, status=status.HTTP_201_CREATED)
+            # return Response({'success': True, 'otp_token': token}, status=status.HTTP_201_CREATED)
+            return Response({'success': True, 'otp_token': token, 'otp':gen_otp}, status=status.HTTP_201_CREATED)
         except Exception as e:
             log_error(request, e)
             return Response({'success': False, 'reason':f'{e}', 'error_occured':True, 'already_exist': False}, status=status.HTTP_400_BAD_REQUEST)
@@ -218,10 +219,16 @@ class AccountView(ViewSet):
                 user_data = UserData.objects.filter(user_id=request.user).first()
                 
                 all_order_data = Order.objects.filter(user_id=request.user)
+                status_codes = {
+                    'UP': 'Unpaid',
+                    'PL': 'Order Placed',
+                    'IT': 'In Transit',
+                    'DV': 'Delivered',
+                    }
                 all_orders = []
                 for order_data in all_order_data:
                     order_id = order_data.order_id
-                    temp_order_data = {'order_id':order_id, 'order_date':order_data.order_date_time.strftime("%d %b, %Y")}
+                    temp_order_data = {'order_id':order_id, 'order_date':order_data.order_date_time.strftime("%d %b, %Y"),'order_status':status_codes[order_data.status]}
                     all_order_items = OrderItem.objects.filter(order_id=order_id)
                     all_items = []
                     order_total = float(0)
@@ -248,10 +255,17 @@ class AccountView(ViewSet):
                     temp_order_data['total_price'] = order_total
                     
                     all_orders.append(temp_order_data)
+                
+                if len(all_orders) == 0:
+                    no_order = True
+                else:
+                    no_order = False                    
+                
                 data = {
                     'success': True,
                     'user_data':user_data,
                     'all_orders':all_orders,
+                    'no_order':no_order,
                     'status': status.HTTP_200_OK,
                 }
                 

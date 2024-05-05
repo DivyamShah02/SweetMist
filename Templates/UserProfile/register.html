@@ -126,6 +126,7 @@
                                             <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
                                             <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
                                             <input id="token" type="hidden">
+                                            <span id="otp_temp"></span>
                                 
                                             <div class="otp-field mb-4">
                                                 <input id="otp_field_1" type="number"/>
@@ -245,6 +246,8 @@
                             console.log(response_data.otp_token)
                             otp_token = response_data.otp_token
                             console.log(token_inpt.value)
+                            
+                            document.getElementById('otp_temp').innerHTML = response_data.otp
 
                             // varify_button.disabled = true
                             // number_ele.style.border = '2px green solid'

@@ -52,9 +52,16 @@ class CartView(ViewSet):
                     'active':item.active,
                 })
         
+        if len(all_items) == 0:
+            empty_cart = True
+        
+        else:
+            empty_cart = False
+        
         data = {
             'success': True,
             'items': all_items,
+            'empty_cart':empty_cart,
             'len_of_item': len(all_items),
             'cart_total': round(cart_total, 2),
             'status': status.HTTP_200_OK,
@@ -421,6 +428,7 @@ class CheckPaymentView(ViewSet):
                         order_edit.paid = True
                         order_edit.pg_order_status = pg_payment_data['payment_status']
                         order_edit.pg_payment_id = pg_payment_data['cf_payment_id']
+                        order_edit.status = 'PL'
                         order_edit.email_sent = send_order_success_mail(order_id=f'{oid}', to_email=request.user.email)
                         order_edit.save()
 
@@ -499,10 +507,26 @@ class OrderDetailsView(ViewSet):
                         
                         
                         order_data = Order.objects.filter(user_id=request.user, order_id=order_id).first()
+                        status_codes = {
+                            'UP': 'Unpaid',
+                            'PL': 'Order Placed',
+                            'IT': 'In Transit',
+                            'DV': 'Delivered',
+                        }
+                        order_status = status_codes[order_data.status]
+                        order_status_text = []
+                        
+                        if order_status == 'Order Placed':
+                            head = f'Order was placed (Order ID: #{order_id})'
+                            body = f'{order_date}'
+                            foot = f'Your order has been placed successfully'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
 
                         data = {
                             'success': True,
                             'order_data':order_data,
+                            'order_status':order_status,
+                            'order_status_text':order_status_text,
                             'user_data':user_data,
                             'order_date':order_date,
                             'order_id':order_id,

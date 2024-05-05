@@ -33,9 +33,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./shop.html">Shop</a>
-                        <span>Check Out</span>
+                      <a href="{% url 'home-list' %}"><i class="fa fa-home"></i> Home</a>
+                      <a href="{% url 'shop-list' %}">Shop</a>
+                      <span>Payment</span>
                     </div>
                 </div>
             </div>
@@ -43,19 +43,16 @@
     </div>
     <!-- Breadcrumb Section Begin -->
 
-    <section style="background-color: #eee;">
-        <div class="container py-5">
+    <section>
+        <div class="container pb-5">
           <div class="card">
             <div class="card-body">
               <div class="row d-flex justify-content-center pb-5">
                 <div class="col-12">
                   <div class="">
-                    <div class="py-4 d-flex justify-content-end">
-                      <h6><a href="#!">Cancel and return to website</a></h6>
-                    </div>
-                    <div class="rounded d-flex flex-column p-2" style="background-color: #f8f9fa;">
+                    <div class="rounded d-flex flex-column p-1" style="background-color: #f8f9fa;">
                       <div class="p-2 me-3">
-                        <h4>Order Recap</h4>
+                        <h4 class="text-sm-prm">Order Recap</h4>
                       </div>
                       {% for item in items %}
                       <div class="p-2 d-flex">
@@ -76,8 +73,8 @@
                       </div>
                       <div class="border-top px-2 mx-2"></div>
                       <div class="p-2 d-flex pt-3">
-                        <div class="col-8"><b>Total</b></div>
-                        <div class="ms-auto"><b class="text-success">₹ {{cart_total}}</b></div>
+                        <div class="col-8 text-sm-prm"><b>Total</b></div>
+                        <div class="ms-auto"><b class="text-sm-prm">₹ {{cart_total}}</b></div>
                       </div>
                       <div class="p-2 d-flex pt-4 pb-0">
                         <div class="col-12 alert alert-danger text-center" id="pg_error" style="border: 1px solid red; display: none;" role="alert">
@@ -89,11 +86,15 @@
                         <input type="hidden" id="oid" value="">
                         <input type="hidden" id="order_created" value="FALSE">
                         <button id="renderBtn" style="display: none;"></button>
-                        <button onclick="create_order()" class="btn btn-primary btn-block btn-lg" 
+                        <button onclick="create_order()" class="btn btn-sm-prm btn-block btn-lg" 
                           style="display: flex; justify-content: center; align-items: center;" 
                           id="pay_btn">
                           <span id="pay-text" style="display: block;">Proceed to payment</span>
-                          <span id="login-btn-loader" class="spinner-border text-center" style="display: none;"></snap></button>
+                          <span id="login-btn-loader" class="spinner-border text-center" style="display: none;"></snap>
+                        </button>
+                      </div>
+                      <div class="py-4">
+                        <h6><a href="{% url 'cart-list' %}" class="btn btn-sm-prm-outline w-100">Cancel and return to website</a></h6>
                       </div>
                     </div>
                   </div>

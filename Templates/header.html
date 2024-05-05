@@ -18,7 +18,7 @@
                     <div class="phone-service">
                         <span style="color: #fff !important;">
                             <i class="fa fa-phone"></i>
-                            +91 9054413199
+                            +91 9016971591
                         </span>
                     </div>
                 </div>
@@ -71,46 +71,61 @@
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
-                                    <span id="cart_length">3</span>
+                                    <span id="cart_length">0</span>
                                 </a>
                                 <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table id="cartTable">
-                                            <!-- <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="/static/img/output_image.webp" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="/static/img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody> -->
-                                        </table>
+                                    <div class="card text-center" id="empty_cart" style="display: none;">
+                                        <div class="card-header text-sm-prm" style="background-color: var(--light-primary-color) !important;">
+                                          Empty Cart
+                                        </div>
+                                        <div class="card-body">
+                                          <h5 class="card-title text-sm-prm">You haven't added any products yet.</h5>
+                                          <p class="card-text">It seems like you're new here. Start exploring our products and place your first order now!</p>
+                                          <a href="{% url 'shop-list' %}" class="btn btn-sm-prm">Shop Now</a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                          Explore our products
+                                        </div>
                                     </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5 id="cart_total"></h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="{% url 'cart-list' %}" class="primary-btn view-card">VIEW CART</a>
-                                        <a href="{% url 'check_out-list' %}?cart_checkout=True" class="primary-btn checkout-btn">CHECK OUT</a>
+                                    <div id="not_empty_cart" style="display: none;">
+                                        <div class="select-items">
+                                            <table id="cartTable">
+                                                <!-- <tbody>
+                                                    <tr>
+                                                        <td class="si-pic"><img src="/static/img/output_image.webp" alt=""></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <p>$60.00 x 1</p>
+                                                                <h6>Kabino Bedside Table</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <i class="ti-close"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="si-pic"><img src="/static/img/select-product-2.jpg" alt=""></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <p>$60.00 x 1</p>
+                                                                <h6>Kabino Bedside Table</h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <i class="ti-close"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody> -->
+                                            </table>
+                                        </div>
+                                        <div class="select-total">
+                                            <span>total:</span>
+                                            <h5 id="cart_total"></h5>
+                                        </div>
+                                        <div class="select-button">
+                                            <a href="{% url 'cart-list' %}" class="primary-btn view-card">VIEW CART</a>
+                                            <a href="{% url 'check_out-list' %}?cart_checkout=True" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -137,10 +152,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 text-right">
                         <nav class="nav-menu mobile-menu">
                             <ul class="m-0" style="background-color: var(--primary-color);">
-                                <li><a href="{% url 'home-list' %}">Home</a></li>
+                                <!-- <li><a href="{% url 'home-list' %}">Home</a></li> -->
                                 <li><a href="{% url 'shop-list' %}">Shop</a></li>
                                 <!-- <li><a href="#">Collection</a>
                                     <ul class="dropdown">
@@ -226,8 +241,14 @@
             
             const data = await response.json();
             console.log(JSON.stringify(data, null, 2))
-            updateCartTable(data);
             if (data.success == true){
+                if (data.empty_cart == true){
+                    document.getElementById('empty_cart').style.display='block';
+                }
+                else{
+                    document.getElementById('not_empty_cart').style.display='block';
+                    updateCartTable(data);
+                }
                
             }
         } catch (error) {
