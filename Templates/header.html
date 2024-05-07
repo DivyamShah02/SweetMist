@@ -244,9 +244,11 @@
             if (data.success == true){
                 if (data.empty_cart == true){
                     document.getElementById('empty_cart').style.display='block';
+                    document.getElementById('not_empty_cart').style.display='none';
                 }
                 else{
                     document.getElementById('not_empty_cart').style.display='block';
+                    document.getElementById('empty_cart').style.display='none';
                     updateCartTable(data);
                 }
                
