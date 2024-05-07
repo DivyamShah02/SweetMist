@@ -90,13 +90,17 @@ class GenerateOTPViewSet(ViewSet):
         try:
             session_token = request.session.get('session_token')
             number = request.data.get('number')
+            module = request.data.get('module')
             number = f'+91 {number}'
             email = request.data.get('email')
             
             user_exist = UserData.objects.filter(number=number).first()
             
-            if user_exist:
+            if user_exist and module == 'register':
                 return Response({'success': False, 'reason':'User alreaady exist.', 'error_occured':False, 'already_exist': True}, status=status.HTTP_400_BAD_REQUEST)
+            
+            if not user_exist and module == 'reset_password':
+                return Response({'success': False, 'reason':'User doesnot exist.', 'error_occured':False, 'does_not_exist': True}, status=status.HTTP_400_BAD_REQUEST)            
 
             gen_otp = random.randint(111111, 999999)
             token = secrets.token_hex(15)
@@ -278,7 +282,7 @@ class AccountView(ViewSet):
             log_error(request, e)
             return redirect('login-list')
 
-class EditAccountData(ViewSet):
+class EditAccountDataView(ViewSet):
     def create(self, request):
         log_access(request)
         try:
@@ -303,6 +307,43 @@ class EditAccountData(ViewSet):
         except Exception as e:
             log_error(request, e)
             return JsonResponse({'success':False, 'detail':e})
+
+class ChangePasswordView(ViewSet):
+    def list(self,request):
+        log_access(request)
+        return render(request, 'UserProfile/change_password.html')
+    
+    def create(self, request):
+        log_access(request)
+        try:
+            number = request.data.get('number')
+            number = f'+91 {number}'
+            email = request.data.get('email')
+            password = request.data.get('password')
+            confirm_password = request.data.get('confirm_password')
+            otp_token = request.data.get('otp_token')
+            
+            if password != confirm_password:
+                return Response({'success': False, 'reason':'Password doesnot match.', 'otp_not_verified':False, 'password_doesnot_match':True}, status=status.HTTP_400_BAD_REQUEST)                                
+            
+
+            if not Otp.objects.filter(token=otp_token, active=False, number=number).first():
+                return Response({'success': False, 'reason':'OTP is not verified.', 'otp_not_verified':True, 'password_doesnot_match':False}, status=status.HTTP_400_BAD_REQUEST)
+
+            user_data = UserData.objects.filter(number=number).first()
+            user = User.objects.filter(username=user_data.user_id).first()
+            user.set_password(password)
+            user.save()
+            
+            # login(request, user)
+            # request.session.set_expiry(30 * 24 * 60 * 60)
+            # return redirect('account-list')
+
+            return Response({'success': True}, status=status.HTTP_201_CREATED)
+        
+        except Exception as e:
+            log_error(request, e)
+            return Response({'success': False, 'reason':f'{e}', 'otp_not_verified':False, 'password_doesnot_match':False}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

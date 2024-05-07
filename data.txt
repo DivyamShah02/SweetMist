@@ -1,0 +1,89 @@
+Sure, here are suggested meta tags for each of the pages you mentioned:
+
+**Homepage:**
+- Description: Welcome to Sweet Mist, your one-stop destination for delicious desserts, premixes, and baking essentials. Explore our wide range of mouthwatering treats and elevate your baking adventures today.
+- Keywords: desserts, premixes, baking, cakes, cookies, brownies, desserts online, bakery, online store
+- Author: Divyam Shah
+- Title: Sweet Mist - Home
+
+**Blog:**
+- Description: Explore our blog for insightful articles on baking tips, dessert recipes, and health-conscious indulgence. Let our expert guidance inspire your culinary creations.
+- Keywords: baking tips, dessert recipes, health-conscious baking, dessert blog, culinary inspiration
+- Author: Divyam Shah
+- Title: Sweet Mist - Blog
+
+**Shop:**
+- Description: Explore our shop for a delectable array of desserts, premixes, and baking essentials. From mouthwatering cakes to irresistible cookies, find everything you need to elevate your baking adventures.
+- Keywords: desserts, premixes, baking essentials, cakes, cookies, brownies, baking ingredients, online bakery, sweet treats
+- Author: Divyam Shah
+- Title: Sweet Mist - Shop
+
+Feel free to adjust the keywords, author name, and title to better suit your shop's offerings and branding.
+
+**Contact:**
+- Description: Get in touch with us for any inquiries, feedback, or collaboration opportunities. Our team is here to assist you with all your questions and concerns.
+- Keywords: contact us, customer support, inquiries, feedback, collaboration
+- Author: Divyam Shah
+- Title: Sweet Mist - Contact Us
+
+**FAQ:**
+- Description: Find answers to commonly asked questions about our products, ordering process, shipping, and more. Have a question? Check out our FAQ section for quick answers.
+- Keywords: frequently asked questions, FAQ, product inquiries, shipping information, ordering process
+- Author: Divyam Shah
+- Title: Sweet Mist - FAQ
+
+**Checkout:**
+- Description: Streamline your shopping experience with our secure and convenient checkout process. Complete your order seamlessly and enjoy your delicious desserts in no time.
+- Keywords: checkout, shopping cart, secure checkout, online payment, order completion
+- Author: Divyam Shah
+- Title: Sweet Mist - Checkout
+
+**Invoice:**
+- Description: View and download your invoice for easy reference and record-keeping. Keep track of your orders and payments with our user-friendly invoice system.
+- Keywords: invoice, order summary, payment receipt, order details, record-keeping
+- Author: Divyam Shah
+- Title: Sweet Mist - Invoice
+
+**Order Detail:**
+- Description: Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and track your order every step of the way.
+- Keywords: order detail, order summary, shipping information, order status, tracking
+- Author: Divyam Shah
+- Title: Sweet Mist - Order Detail
+
+**Payment:**
+- Description: Securely complete your payment for your order and enjoy peace of mind with our encrypted payment gateway. Your transaction details are safe and protected.
+- Keywords: payment, online payment, secure payment, payment gateway, transaction security
+- Author: Divyam Shah
+- Title: Sweet Mist - Payment
+
+**Cart:**
+- Description: View and manage the items in your shopping cart before proceeding to checkout. Add, remove, or update quantities of products with ease for a seamless shopping experience.
+- Keywords: shopping cart, cart management, add to cart, remove from cart, update cart
+- Author: Divyam Shah
+- Title: Sweet Mist - Shopping Cart
+
+**Product Detail:**
+- Description: Explore the details and specifications of our premium products, from delectable desserts to baking essentials. Find the perfect treat to satisfy your sweet cravings.
+- Keywords: product detail, product specifications, product features, product description, product reviews
+- Author: Divyam Shah
+- Title: Sweet Mist - Product Detail
+
+**Account:**
+- Description: Manage your account settings, track your orders, and access exclusive offers with your personalized account. Sign in to unlock a world of convenience and benefits.
+- Keywords: account management, user account, sign in, register, account settings
+- Author: Divyam Shah
+- Title: Sweet Mist - Account
+
+**Login:**
+- Description: Sign in to your account to access your order history, save your preferences, and enjoy a personalized shopping experience. Your account login ensures a secure and seamless shopping journey.
+- Keywords: login, account login, sign in, secure login, personalized experience
+- Author: Divyam Shah
+- Title: Sweet Mist - Login
+
+**Register:**
+- Description: Create a new account to unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience. Register now and join our community of dessert enthusiasts.
+- Keywords: register, create account, sign up, new user registration, exclusive benefits
+- Author: Divyam Shah
+- Title: Sweet Mist - Register
+
+Remember to replace `Sweet Mist` and `Divyam Shah` with your actual e-commerce business name and Divyam Shah, respectively. These meta tags are designed to help optimize each page for search engines and improve the overall visibility and ranking of your website.

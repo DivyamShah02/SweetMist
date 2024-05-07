@@ -1,6 +1,6 @@
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-from .views import RegisterViewSet, GenerateOTPViewSet, CheckOTPViewSet, LoginViewSet, LogoutViewSet, AccountView,  EditAccountData
+from .views import RegisterViewSet, GenerateOTPViewSet, CheckOTPViewSet, LoginViewSet, LogoutViewSet, AccountView,  EditAccountDataView, ChangePasswordView
 
 register_router = DefaultRouter()
 register_router.register(r'', RegisterViewSet, basename='register')
@@ -12,7 +12,8 @@ login_router.register(r'', LoginViewSet, basename='login')
 
 account_router = DefaultRouter()
 account_router.register(r'', AccountView, basename='account')
-account_router.register(r'edit_account', EditAccountData, basename='edit_account')
+account_router.register(r'edit_account', EditAccountDataView, basename='edit_account')
+account_router.register(r'change_password', ChangePasswordView, basename='change_password')
 
 logout_router = DefaultRouter()
 logout_router.register(r'', LogoutViewSet, basename='logout')

@@ -189,7 +189,7 @@ class CheckOutView(ViewSet):
 
             return render(request, 'Order/check-out.html', data, status=status.HTTP_200_OK)
 
-        else:
+        elif request.query_params.get('product_id'):
             user_logged_in = False
             user_data = None
             if request.user.is_authenticated:
@@ -230,6 +230,8 @@ class CheckOutView(ViewSet):
 
             return render(request, 'Order/check-out.html', data, status=status.HTTP_200_OK)
 
+        else:
+            return redirect('cart-list')
 
 class PaymentView(ViewSet):
     def list(self, request):
@@ -284,7 +286,7 @@ class PaymentView(ViewSet):
 
             return render(request, 'Order/payment.html', data, status=status.HTTP_200_OK)
 
-        else:
+        elif request.query_params.get('product_id'):
             user_logged_in = False
             user_data = None
             if request.user.is_authenticated:
@@ -325,6 +327,8 @@ class PaymentView(ViewSet):
 
             return render(request, 'Order/payment.html', data, status=status.HTTP_200_OK)
 
+        else:
+            return redirect('cart-list')
 
 class OrderView(ViewSet):
     def create(self,request):
