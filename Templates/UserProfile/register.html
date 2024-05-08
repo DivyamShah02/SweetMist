@@ -37,7 +37,7 @@
         "sameAs": [
             "https://www.facebook.com/sweetmist",
             "https://twitter.com/sweetmist",
-            "https://www.instagram.com/sweetmist"
+            "https://www.instagram.com/sweetmist_snehi"
         ]
         }
     </script>
@@ -416,7 +416,7 @@
                     const email = document.getElementById('email').value
                     const password = document.getElementById('password').value
                     const register_btn_loader = document.getElementById('register-btn-loader')
-                    register_btn_loader.style.display = 'block'
+                    // register_btn_loader.style.display = 'block'
 
                     try {
                         const url = `{% url 'register-list' %}`;
@@ -445,10 +445,11 @@
                         if (response_data.success) {
                             // $('#otpModal').modal('hide')
                             // $('#registerModal').modal('show')
-                            register_btn_loader.style.display = 'none'
-                            location.reload();
+                            // register_btn_loader.style.display = 'none'
+                            window.location.href = "{% url 'account-list' %}";
+                            // location.reload();
                         } else {
-                            register_btn_loader.style.display = 'none'
+                            // register_btn_loader.style.display = 'none'
                             
                             if (response_data.otp_not_verified){
                                 document.getElementById('register_error_number_not_verified').style.display = 'block'

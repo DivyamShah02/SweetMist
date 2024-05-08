@@ -36,7 +36,7 @@
         "sameAs": [
             "https://www.facebook.com/sweetmist",
             "https://twitter.com/sweetmist",
-            "https://www.instagram.com/sweetmist"
+            "https://www.instagram.com/sweetmist_snehi"
         ]
         }
     </script>
@@ -131,6 +131,7 @@
                                 <div class="col-12">
                                     <label for="login_password" class="form-label"><b>Password</b></label>
                                     <input required style="border: 1px solid black;" type="password" class="form-control" id="login_password" placeholder="******">
+                                    <div style="color: black; cursor: pointer;"><b><u><a href="{% url 'change_password-list' %}" style="color: black;">Forget password?</a></u></b></div>
                                 </div>
     
                                 <div class="col-12 mt-4" style="text-align: center !important;">      
@@ -138,10 +139,6 @@
                                         <button type="button" onclick="login()" id="login-btn" class="site-btn login-btn">Login<span id="login-btn-loader" style="display: none;" class="spinner-border loading-bh"></snap></button>
                                     </div>
                                 </div>
-
-                                
-    
-                                
                             </div>
                         </form>
                         <div class="switch-login">

@@ -567,6 +567,7 @@ class InvoiceView(ViewSet):
                 order_id = request.query_params.get('order_id')
                 order_data = Order.objects.filter(user_id=request.user, order_id=order_id).first()
                 if order_data:
+                    order_date = order_data.order_date_time.strftime("%d %b, %Y")                    
                     all_order_items = OrderItem.objects.filter(order_id=order_id)
                     all_items = []
                     order_total = float(0)
@@ -592,6 +593,7 @@ class InvoiceView(ViewSet):
                     data = {
                         'success': True,
                         'user_data':user_data,
+                        'order_date':order_date,                        
                         'order_id':order_id,
                         'items': all_items,
                         'len_of_item': len(all_items),

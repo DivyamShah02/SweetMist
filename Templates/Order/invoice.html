@@ -2,159 +2,294 @@
 <html lang="zxx">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sweet Mist</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description"
+    content="Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and track your order every step of the way.">
+  <meta name="keywords" content="order detail, order summary, shipping information, order status, tracking">
+  <meta name="author" content="Divyam Shah">
+  <link rel="canonical" href="https://www.sweetmist.in/order_detail/invoice/">
+  <meta name="robots" content="index, follow">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Sweet Mist - Order Detail">
+  <meta property="og:description"
+    content="Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and track your order every step of the way.">
+  <meta property="og:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
+  <meta property="og:url" content="https://www.sweetmist.in/order_detail/invoice/">
+  <meta property="og:type" content="website">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sweet Mist - Order Detail">
+  <meta name="twitter:description" content="Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and 
+    track your order every step of the way.">
+  <meta name="twitter:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
 
+  <!-- Schema.org Markup -->
+  <script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Sweet Mist",
+        "description": "Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and track your order every step of the way.",
+        "url": "https://www.sweetmist.in/order_detail/invoice/",
+        "logo": "https://www.sweetmist.in/static/SweetMistLogo.png",
+        "sameAs": [
+            "https://www.facebook.com/sweetmist",
+            "https://twitter.com/sweetmist",
+            "https://www.instagram.com/sweetmist_snehi"
+        ]
+        }
+    </script>
 
+  <title>Sweet Mist - Order Detail</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+
+  <style>
+    .custom-link {
+      color: inherit;
+      /* Inherit text color from parent */
+      text-decoration: none;
+      /* Remove underline */
+    }
+
+    .custom-link:hover {
+      color: inherit;
+      /* Inherit text color on hover */
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+  </style>
 </head>
 
 <body>
-      <div class="invoice-print p-6" style="margin: 60px;">
+  <div id="header">
 
-        <div class="d-flex justify-content-between flex-row">
-          <div class="mb-6">
-            <div class="d-flex svg-illustration align-items-center gap-2 mb-6">
-              <!-- <span class="app-brand-logo demo">
-              </span> -->
-              <img src="/static/SweetMist.png" width="10%" alt="">
-              <span class="h4 mb-3 app-brand-text fw-semibold">Sweet Mist</span>
-            </div>
+    {% include "header.html" %}
+  </div>
 
-            <!-- <p class="mb-1">Office 149, 450 South Brand Brooklyn</p>
-            <p class="mb-1">San Diego County, CA 91905, USA</p>
-            <p class="mb-0">+1 (123) 456 7891, +44 (876) 543 2198</p> -->
-          </div>
-          <div>
-            <h4 class="mb-6">ORDER #{{order_id}}</h4>
-            <div class="mb-1">
-              <span>Date Issues:</span>
-              <span>April 25, 2021</span>
-            </div>
-            <div>
-              <span>Date Due:</span>
-              <span>May 25, 2021</span>
-            </div>
-          </div>
-        </div>
-      
-        <hr class="mb-6" />
-      
-        <div class="d-flex justify-content-between mb-6">
-          <div class="my-2">
-            <h6>Invoice To:</h6>
-            <p class="mb-1">{{user_data.first_name}} {{user_data.last_name}}</p>
-            <p class="mb-1">{{user_data.number}}</p>
-            <p class="mb-0">{{user_data.email}}</p>
-            <p class="mb-1">{{user_data.primary_address}}</p>
-            <p class="mb-1">{{user_data.secondary_address}}</p>
-            <p class="mb-1">{{user_data.city}}, {{user_data.state}},</p>
-            <p class="mb-1">{{user_data.country}},</p>
-            <p class="mb-1">{{user_data.pincode}}.</p>
-          </div>
-          <!-- <div class="my-2">
-            <h6>Bill To:</h6>
-            <table>
-              <tbody>
-                <tr>
-                  <td class="pe-4">Total Due:</td>
-                  <td>$12,110.55</td>
-                </tr>
-                <tr>
-                  <td class="pe-4">Bank name:</td>
-                  <td>American Bank</td>
-                </tr>
-                <tr>
-                  <td class="pe-4">Country:</td>
-                  <td>United States</td>
-                </tr>
-                <tr>
-                  <td class="pe-4">IBAN:</td>
-                  <td>ETD95476213874685</td>
-                </tr>
-                <tr>
-                  <td class="pe-4">SWIFT code:</td>
-                  <td>BR91905</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> -->
-        </div>
-      
-        <div class="table-responsive border border-bottom-0 rounded">
-          <table class="table m-0">
-            <thead class="table-light border-top">
-              <tr>
-                <th>Item</th>
-                <th>Description</th>
-                <th>Cost</th>
-                <th>Qty</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in items %}
-              <tr>
-                <td>{{item.title}}</td>
-                <td>{{item.category}}</td>
-                <td>₹ {{item.price}}</td>
-                <td>{{item.qty}}</td>
-                <td>₹ {{item.total_price}}</td>
-              </tr>
-              {% endfor %}
-
-            </tbody>
-          </table>
-        </div>
-        <div class="table-responsive">
-          <table class="table m-0 table-borderless">
-            <tbody>
-              <tr>
-                <td class="align-top px-6 py-6">
-                  <!-- <p class="mb-1">
-                    <span class="me-2 fw-medium">Salesperson:</span>
-                    <span>Alfie Solomons</span>
-                  </p> -->
-                  <span>Thanks for your business</span>
-                </td>
-                <td class="px-0 py-12 w-px-100">
-                  <p class="mb-2">Subtotal:</p>
-                  <p class="mb-2">Discount:</p>
-                  <p class="mb-2 border-bottom pb-2">Tax:</p>
-                  <p class="mb-0 pt-2">Total:</p>
-                </td>
-                <td class="text-end px-0 py-6 w-px-100">
-                  <p class="fw-medium mb-2">₹ {{order_total}}</p>
-                  <p class="fw-medium mb-2">₹ 00.00</p>
-                  <p class="fw-medium mb-2 border-bottom pb-2">₹ 00.00</p>
-                  <p class="fw-medium mb-0 pt-2">₹ {{order_total}}</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      
-        <hr class="mt-0 mb-6">
-        <div class="row">
-          <div class="col-12">
-            <span class="fw-medium">Note:</span>
-            <span>It was a pleasure working with you and your team. We hope you will keep us in mind for future
-              freelance projects. Thank You!</span>
+  <!-- Breadcrumb Section Begin -->
+  <div class="breacrumb-section" id="breacrumb-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb-text">
+            <a href="#"><i class="fa fa-home"></i> Home</a>
+            <span>Login</span>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- Breadcrumb Form Section Begin -->
 
-    <script>
-      "use strict";window.print();
-    </script>
+  <div class="invoice-print p-6" id="content" style="margin: 60px; display: none;">
+
+    <div class="d-flex justify-content-between flex-row">
+      <div class="mb-6">
+        <div class="d-flex svg-illustration align-items-center gap-2 mb-6">
+          <!-- <span class="app-brand-logo demo">
+            </span> -->
+          <img src="/static/SweetMistLogo.png" width="25%" alt>
+        </div>
+
+        <!-- <p class="mb-1">Office 149, 450 South Brand Brooklyn</p>
+          <p class="mb-1">San Diego County, CA 91905, USA</p>
+          <p class="mb-0">+1 (123) 456 7891, +44 (876) 543 2198</p> -->
+      </div>
+      <div>
+        <h4 class="mb-6">ORDER #{{order_id}}</h4>
+        <div class="mb-1">
+          <span>Date :</span>
+          <span>{{order_date}}</span>
+        </div>
+        <!-- <div>
+            <span>Date Due:</span>
+            <span>May 25, 2021</span>
+          </div> -->
+      </div>
+    </div>
+
+    <hr class="mb-6" />
+
+    <div class="d-flex justify-content-between mb-6">
+      <div class="my-2">
+        <h6>Invoice To:</h6>
+        <p class="mb-1">{{user_data.first_name}} {{user_data.last_name}}</p>
+        <p class="mb-1">{{user_data.number}}</p>
+        <p class="mb-0">{{user_data.email}}</p>
+        <p class="mb-1">{{user_data.primary_address}}</p>
+        <p class="mb-1">{{user_data.secondary_address}}</p>
+        <p class="mb-1">{{user_data.city}}, {{user_data.state}},</p>
+        <p class="mb-1">{{user_data.country}},</p>
+        <p class="mb-1">{{user_data.pincode}}.</p>
+      </div>
+      <!-- <div class="my-2">
+          <h6>Bill To:</h6>
+          <table>
+            <tbody>
+              <tr>
+                <td class="pe-4">Total Due:</td>
+                <td>$12,110.55</td>
+              </tr>
+              <tr>
+                <td class="pe-4">Bank name:</td>
+                <td>American Bank</td>
+              </tr>
+              <tr>
+                <td class="pe-4">Country:</td>
+                <td>United States</td>
+              </tr>
+              <tr>
+                <td class="pe-4">IBAN:</td>
+                <td>ETD95476213874685</td>
+              </tr>
+              <tr>
+                <td class="pe-4">SWIFT code:</td>
+                <td>BR91905</td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+    </div>
+
+    <div class="table-responsive border border-bottom-0 rounded">
+      <table class="table m-0">
+        <thead class="table-light border-top">
+          <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Cost</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{item.title}}</td>
+            <td>{{item.category}}</td>
+            <td>₹ {{item.price}}</td>
+            <td>{{item.qty}}</td>
+            <td>₹ {{item.total_price}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
+      <table class="table m-0 table-borderless">
+        <tbody>
+          <tr>
+            <td class="align-top px-6 py-6">
+              <!-- <p class="mb-1">
+                  <span class="me-2 fw-medium">Salesperson:</span>
+                  <span>Alfie Solomons</span>
+                </p> -->
+              <span>Thanks for your business</span>
+            </td>
+            <td class="px-0 py-12 w-px-100">
+              <p class="mb-2">Subtotal:</p>
+              <p class="mb-2">Discount:</p>
+              <p class="mb-2 border-bottom pb-2">Tax:</p>
+              <p class="mb-0 pt-2">Total:</p>
+            </td>
+            <td class="text-end px-0 py-6 w-px-100">
+              <p class="fw-medium mb-2">₹ {{order_total}}</p>
+              <p class="fw-medium mb-2">₹ 00.00</p>
+              <p class="fw-medium mb-2 border-bottom pb-2">₹ 00.00</p>
+              <p class="fw-medium mb-0 pt-2">₹ {{order_total}}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="mt-0 mb-6">
+    <div class="row">
+      <div class="col-12">
+        <span class="fw-medium">Note:</span>
+        <span>It was a pleasure serving you the dessert treat we hope you
+          loved it please rate us and share your expierence! Once again Thank
+          You!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content wrapper -->
+  <div class="content-wrapper" id="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="card text-center my-3">
+        <div class="card-header text-sm-prm" style="background-color: var(--light-primary-color) !important;">
+          Your Invoice
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-sm-prm py-2">Download invoice of order id
+            : {{order_id}}.</h5>
+          <!-- <p class="card-text">It seems like you're new here. Start exploring our products and place your first order now!</p> -->
+          <button onclick="saveAsPDF()" class="btn btn-sm-prm">Get Invoice</button>
+        </div>
+        <div class="card-footer text-muted">
+          Explore our products
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+  </div>
+  <!-- Content wrapper -->
+
+  <div id="footer">
+    {% include "related_products.html" %}
+    {% include "footer.html" %}
+  </div>
+
+  <!-- Js Plugins -->
+  <script src="/static/js/jquery-3.3.1.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/jquery-ui.min.js"></script>
+  <script src="/static/js/jquery.countdown.min.js"></script>
+  <script src="/static/js/jquery.nice-select.min.js"></script>
+  <script src="/static/js/jquery.zoom.min.js"></script>
+  <script src="/static/js/jquery.dd.min.js"></script>
+  <script src="/static/js/jquery.slicknav.js"></script>
+  <script src="/static/js/owl.carousel.min.js"></script>
+  <script src="/static/js/main.js"></script>
+
+  <script>
+    function saveAsPDF() {
+      document.getElementById('header').style.display = 'none';
+      document.getElementById('breacrumb-section').style.display = 'none';
+      document.getElementById('content-wrapper').style.display = 'none';
+      document.getElementById('footer').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      "use strict"; window.print();
+      document.getElementById('header').style.display = 'block';
+      document.getElementById('breacrumb-section').style.display = 'block';
+      document.getElementById('content-wrapper').style.display = 'block';
+      document.getElementById('footer').style.display = 'block';
+      document.getElementById('content').style.display = 'none  ';
+
+    }
+  </script>
+
 </body>
 
 </html>
