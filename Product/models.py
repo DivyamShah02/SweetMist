@@ -24,6 +24,8 @@ class Product(models.Model):
     cart_image = models.ImageField(upload_to='Product_Img',null=True)
     add_date = models.DateTimeField(default=timezone.now,null=True)
     
+    active = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.slug
 

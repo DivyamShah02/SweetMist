@@ -92,3 +92,6 @@ def misc_temp(request):
     order_edit.pg_payment_id = ''
     order_edit.save()
     return HttpResponse('Done')
+
+def page_not_found(request, exception):
+    return render(request, '404.html', status=404)

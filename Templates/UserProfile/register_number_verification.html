@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Create a new account to unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience. Register now and join our community of dessert enthusiasts.">
+    <meta name="keywords" content="register, create account, sign up, new user registration, exclusive benefits">
+    <meta name="author" content="Divyam Shah">
+    <link rel="canonical" href="https://www.sweetmist.in/check_out/register/">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Sweet Mist - Register">
+    <meta property="og:description" content="Create a new account to unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience. Register now and join our community of dessert enthusiasts.">
+    <meta property="og:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
+    <meta property="og:url" content="https://www.sweetmist.in/check_out/register/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sweet Mist - Register">
+    <meta name="twitter:description" content="Create a new account to unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience. Register now 
+    and join our community of dessert enthusiasts.">
+    <meta name="twitter:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Sweet Mist",
+        "description": "Create a new account to unlock exclusive benefits, track your orders, and enjoy a personalized shopping experience. Register now and join our community of dessert enthusiasts.",
+        "url": "https://www.sweetmist.in/check_out/register/",
+        "logo": "https://www.sweetmist.in/static/SweetMistLogo.png",
+        "sameAs": [
+            "https://www.facebook.com/sweetmist",
+            "https://twitter.com/sweetmist",
+            "https://www.instagram.com/sweetmist_snehi"
+        ]
+        }
+    </script>
+    
+    <title>Sweet Mist - Register</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/otp.css" type="text/css">
+</head>
+
+<body>
+    {% include "header.html" %}
+
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="#"><i class="fa fa-home"></i> Home</a>
+                        <span>Register</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Form Section Begin -->
+
+    <!-- Register Section Begin -->
+    <div class="register-login-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="register-form">
+                        <h2>Register</h2>
+                        <div class="alert alert-danger" id="register_error" style="border: 1px solid red; display: none;" role="alert">
+                            Error occured, please try again!
+                        </div>
+                        <div class="alert alert-danger" id="register_error_number_not_verified" style="border: 1px solid red; display: none;" role="alert">
+                            Mobile number not verified, please verify!
+                        </div>
+                        <div class="alert alert-danger" id="register_error_email_already_registered" style="border: 1px solid red; display: none;" role="alert">
+                            Email Id is already registered, please Login!
+                        </div>
+
+                        <form id="register_form">
+                            <div class="row">
+                                <div class="col-6 mt-4">
+                                    <label for="first_name" class="form-label"><b>First Name</b></label>
+                                    <input required style="border: 1px solid black;" type="text" class="form-control" id="first_name" placeholder="First Name">
+                                </div>
+                                <div class="col-6 mt-4">
+                                    <label for="last_name" class="form-label"><b>Last Name</b></label>
+                                    <input required style="border: 1px solid black;" type="text" class="form-control" id="last_name" placeholder="Last Name">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <label for="number" class="form-label"><b>Mobile Number</b></label><br>
+                                    <input type="hidden" id="number_verified" value="no">
+                                </div>
+                                <div class="col-8">
+                                    <!-- <input type="text" class="form-control" id="number" placeholder="+91 0000000000" pattern="[0-9]*" maxlength="14"> -->
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="border: 1px solid black; border-right: 0px;">+91</span>
+                                        <input required type="text" style="border: 1px solid black;" class="form-control" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
+                                    </div>
+                                    <div style="color: red;" id="number_validation"></div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <!-- <button type="button" style="padding-top: 11px; padding-bottom: 11px; width: 100%;" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#otpModal">Verify</button> -->
+                                    <button onclick="sentOTP()" id="verify_button" type="button" style="width: 100%;" class="btn btn-outline-success">Verify </button>
+                                    <button type="button" disabled style="width: 100%; display: none;" class="btn btn-outline-success" id="verify_loader"><span class="spinner-border loading-bh"></snap></button>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <label for="email" class="form-label"><b>Email</b></label>
+                                    <input required style="border: 1px solid black;" type="email" class="form-control" id="email" placeholder="Email ID">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <label for="password" class="form-label"><b>Password</b></label>
+                                    <input required style="border: 1px solid black;" type="password" class="form-control" id="password" placeholder="******">
+                                </div>
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <div class="col-12 mt-4" style="text-align: center !important;">       
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" onclick="register()" id="register-btn" class="site-btn register-btn">Register<span id="register-btn-loader" style="display: none;" class="spinner-border loading-bh"></snap></button>
+                                    </div>           
+                                <!-- <button onclick="register()" type="button" class="btn btn-success">Register</button> -->
+                                </div>
+    
+                                
+                            </div>
+                        </form>
+  
+                        <!-- OTP Modal -->
+                        <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title" id="otpModalLabel"><b>Verify OTP</b></h4>
+                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                </div>
+                                <div class="modal-body">            
+                                    <div class="row justify-content-center">
+                                        <!-- <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;"> -->
+                                        <!-- <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);"> -->
+                                            <div class="card-body p-5 text-center">
+                                            <!-- <b><h4>Verify</h4> -->
+                                            <b>OTP code was sent to you on your mobile number</b><br>
+                                            <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
+                                            <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
+                                            <input id="token" type="hidden">
+                                            <span id="otp_temp"></span>
+                                
+                                            <div class="otp-field mb-4">
+                                                <input id="otp_field_1" type="number"/>
+                                                <input id="otp_field_2" type="number" disabled />
+                                                <input id="otp_field_3" type="number" disabled />
+                                                <input id="otp_field_4" type="number" disabled />
+                                                <input id="otp_field_5" type="number" disabled />
+                                                <input id="otp_field_6" type="number" disabled />
+                                            </div>
+                                
+                                                <div class="d-flex justify-content-center">
+                                                    <button onclick="checkOTP()" id="otp-btn" class="btn btn-success mb-3 d-flex align-items-center">
+                                                        &nbsp;Verify&nbsp;<span id="otp-btn-loader" style="display: none;" class="spinner-border loading-bh"></snap>
+                                                    </button>
+                                                </div>
+                                                <!-- <button id="otp-btn-loader" style="display: none;" class="btn btn-success mb-3">
+                                                    <span class="spinner-border loading-bh"></snap>
+                                                </button> -->
+
+                                            <p class="resend text-muted mb-0">
+                                                <b>Didn't receive code? <span style="cursor: pointer; color: black;" onclick="sentOTP()"><u>Request again</u></span></b>
+                                            </p>
+                                            </div>
+                                        <!-- </div> -->
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="switch-login">
+                            <a href="{% url 'login-list' %}" class="or-login">Or Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Register Form Section End -->
+    
+    {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/otp.js"></script>
+
+    <script>
+        var otp_token;
+
+        async function sentOTP() {
+            try {
+                    const attempts_ele = document.getElementById('attempts_left')
+                    attempts_ele.innerText = 1
+                    const wrong_otp = document.getElementById('wrong_otp')
+                    wrong_otp.style.display = 'none'
+
+                    const varify_button = document.getElementById("verify_button")
+                    varify_button.style.display = 'none'
+                    const varify_loader = document.getElementById("verify_loader")
+                    varify_loader.style.display = 'block'
+
+                    const token_inpt = document.getElementById("token")
+
+                    const email_ele = document.getElementById('email')
+                    const email = email_ele.value
+
+                    const number_ele = document.getElementById('number')
+                    const number = number_ele.value
+                    const number_validation = document.getElementById('number_validation')
+
+                    if (number === '' || !/^\d{10}$/.test(number)) {
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_ele.style.border = '2px red solid'
+                            number_validation.innerText = 'Please enter a valid phone number'
+                    }
+
+                    else {
+                        const url = `{% url 'generate_otp-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                        'number': number,
+                        'email':email,
+                        'module':'register'
+                        };
+
+                        const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data) // Convert the data to JSON format
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+                        
+                        if (response_data.success) {
+                            console.log('new_here')
+                            $('#otpModal').modal('show')
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_validation.innerText = 'OTP sent!'
+                            number_validation.style.color = 'green'
+                            number_ele.style.border = '1px black solid'
+                            token_inpt.value = response_data.otp_token
+                            console.log(response_data.otp_token)
+                            otp_token = response_data.otp_token
+                            console.log(token_inpt.value)
+                            
+                            document.getElementById('otp_temp').innerHTML = response_data.otp
+
+                            // varify_button.disabled = true
+                            // number_ele.style.border = '2px green solid'
+                            // number_ele.disabled = true
+                            // number_validation.innerText = ''
+
+                        } else {
+                            if (response_data.already_exist){
+                            number_validation.innerText = 'Phone number already exist, please login'
+                            number_ele.style.border = '2px red solid'
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+
+                            }
+            
+                        }
+                    }
+
+
+                } catch (error) {
+                    console.error(error);
+                }
+
+        }
+
+        async function checkOTP() {
+            const attempts_ele = document.getElementById('attempts_left')
+            const attempts_left = attempts_ele.innerText
+            const wrong_otp = document.getElementById('wrong_otp')
+            const otp_btn_loader = document.getElementById('otp-btn-loader')
+            otp_btn_loader.style.display = 'block'
+
+            const varify_button = document.getElementById("verify_button")
+            const varify_loader = document.getElementById("verify_loader")
+            const number_ele = document.getElementById('number')
+            const number = number_ele.value
+            const number_validation = document.getElementById('number_validation')
+
+            if (attempts_left === '3'){
+                number_validation.innerText = 'All attempts used, please re-verify'
+                number_validation.style.color = 'red'
+                number_ele.style.border = '2px red solid'
+                $('#otpModal').modal('hide')
+                otp_btn_loader.style.display = 'none'
+            }
+            else{
+                otp_field_1_ele = document.getElementById('otp_field_1')
+                otp_field_1_value = otp_field_1_ele.value
+                otp_field_2_ele = document.getElementById('otp_field_2')
+                otp_field_2_value = otp_field_2_ele.value
+                otp_field_3_ele = document.getElementById('otp_field_3')
+                otp_field_3_value = otp_field_3_ele.value
+                otp_field_4_ele = document.getElementById('otp_field_4')
+                otp_field_4_value = otp_field_4_ele.value
+                otp_field_5_ele = document.getElementById('otp_field_5')
+                otp_field_5_value = otp_field_5_ele.value
+                otp_field_6_ele = document.getElementById('otp_field_6')
+                otp_field_6_value = otp_field_6_ele.value
+
+                user_otp = otp_field_1_value + otp_field_2_value + otp_field_3_value + otp_field_4_value + otp_field_5_value + otp_field_6_value
+                console.log(user_otp)
+
+                const token_inpt = document.getElementById("token")
+                token = token_inpt.value
+
+                try {
+                        const url = `{% url 'check_otp-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                        'number':number,
+                        'otp': user_otp,
+                        'otp_token':token,
+                        };
+
+                        const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data) // Convert the data to JSON format
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+                        
+                        if (response_data.success) {
+                            $('#otpModal').modal('hide')
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_validation.style.color = 'green'
+                            varify_button.disabled = true
+                            number_ele.style.border = '2px green solid'
+                            number_ele.disabled = true
+                            number_validation.innerText = 'Number verified!'
+                            otp_btn_loader.style.display = 'none'
+                            document.getElementById('number_verified').value = 'yes'
+
+                        } else {
+                            attempts_ele.innerText = response_data.attempts
+                            wrong_otp.style.display = 'block'
+                            otp_btn_loader.style.display = 'none'
+
+                            if (response_data.attempts_exceeded){
+                                number_validation.innerText = 'All attempts used, please re-verify'
+                                number_validation.style.color = 'red'
+                                number_ele.style.border = '2px red solid'
+                                $('#otpModal').modal('hide')
+                                otp_btn_loader.style.display = 'none'
+                            }
+
+                        }
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+            }
+
+        }
+
+        async function register() {
+            var form = document.getElementById('register_form');
+            if (form.reportValidity()){
+                const number_verified_ele = document.getElementById('number_verified')
+                if (number_verified_ele.value === 'yes'){
+                    startLoader()
+                    const token = document.getElementById("token").value
+                    const first_name = document.getElementById('first_name').value
+                    const last_name = document.getElementById('last_name').value
+                    const number = document.getElementById('number').value
+                    const email = document.getElementById('email').value
+                    const password = document.getElementById('password').value
+                    const register_btn_loader = document.getElementById('register-btn-loader')
+                    // register_btn_loader.style.display = 'block'
+
+                    try {
+                        const url = `{% url 'register-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                            'otp_token':token,
+                            'first_name':first_name,
+                            'last_name':last_name,
+                            'number':number,
+                            'email':email,
+                            'password':password,
+                        };
+
+                        const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data)
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+                        
+                        if (response_data.success) {
+                            // $('#otpModal').modal('hide')
+                            // $('#registerModal').modal('show')
+                            // register_btn_loader.style.display = 'none'
+                            window.location.href = "{% url 'account-list' %}";
+                            // location.reload();
+                        } else {
+                            // register_btn_loader.style.display = 'none'
+                            
+                            if (response_data.otp_not_verified){
+                                document.getElementById('register_error_number_not_verified').style.display = 'block'
+
+                            }
+                            else if (response_data.email_already_exists){
+                                document.getElementById('register_error_email_already_registered').style.display = 'block'
+
+                            }
+                            else{
+                                document.getElementById('register_error').style.display = 'block'
+
+                            }
+
+                        }
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+
+                }
+                else{
+                    const number_validation = document.getElementById('number_validation')
+                    number_validation.innerText = 'Please verify mobile number'
+                }
+
+            }
+            stopLoader()
+        }
+
+    </script>
+
+</body>
+
+</html>

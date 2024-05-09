@@ -114,11 +114,14 @@
                           Error occured, please try again later!
                         </div>
                       </div>
+                      <div style="color: black; cursor: pointer;">Payment partner <b><u>Baker's Hub</u></b></div>
+
                       <div class="p-2 d-flex pt-4">
                         <input type="hidden" id="pay_ses_id" value="">
                         <input type="hidden" id="oid" value="">
                         <input type="hidden" id="order_created" value="FALSE">
                         <button id="renderBtn" style="display: none;"></button>
+                        
                         <button onclick="create_order()" class="btn btn-sm-prm btn-block btn-lg" 
                           style="display: flex; justify-content: center; align-items: center;" 
                           id="pay_btn">
@@ -267,6 +270,7 @@
     
       async function check_payment_status(){
         try {
+            startLoader()
             const payment_session_id = document.getElementById('pay_ses_id').value
             const oid = document.getElementById('oid').value
 
@@ -309,6 +313,7 @@
         }
         document.getElementById('pay-text').style.display = 'block';
         document.getElementById('login-btn-loader').style.display = 'none';
+        stopLoader()
       }
 
       const cashfree = Cashfree({

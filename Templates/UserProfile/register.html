@@ -89,10 +89,10 @@
                             Error occured, please try again!
                         </div>
                         <div class="alert alert-danger" id="register_error_number_not_verified" style="border: 1px solid red; display: none;" role="alert">
-                            Mobile number not verified, please verify!
+                            Email Id not verified, please verify!
                         </div>
                         <div class="alert alert-danger" id="register_error_email_already_registered" style="border: 1px solid red; display: none;" role="alert">
-                            Email Id is already registered, please Login!
+                            Mobile number is already registered, please Login!
                         </div>
 
                         <form id="register_form">
@@ -106,25 +106,26 @@
                                     <input required style="border: 1px solid black;" type="text" class="form-control" id="last_name" placeholder="Last Name">
                                 </div>
                                 <div class="col-12 mt-4">
-                                    <label for="number" class="form-label"><b>Mobile Number</b></label><br>
-                                    <input type="hidden" id="number_verified" value="no">
+                                    <label for="email" class="form-label"><b>Email Id</b></label><br>
+                                    <input type="hidden" id="email_verified" value="no">
                                 </div>
                                 <div class="col-8">
                                     <!-- <input type="text" class="form-control" id="number" placeholder="+91 0000000000" pattern="[0-9]*" maxlength="14"> -->
-                                    <div class="input-group">
-                                        <span class="input-group-text" style="border: 1px solid black; border-right: 0px;">+91</span>
-                                        <input required type="text" style="border: 1px solid black;" class="form-control" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
-                                    </div>
-                                    <div style="color: red;" id="number_validation"></div>
+                                    <input required style="border: 1px solid black;" type="email" class="form-control" id="email" placeholder="Email ID">
+                                    
+                                    <div style="color: red;" id="email_validation"></div>
                                 </div>
                                 <div class="col-4 text-center">
                                     <!-- <button type="button" style="padding-top: 11px; padding-bottom: 11px; width: 100%;" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#otpModal">Verify</button> -->
                                     <button onclick="sentOTP()" id="verify_button" type="button" style="width: 100%;" class="btn btn-outline-success">Verify </button>
                                     <button type="button" disabled style="width: 100%; display: none;" class="btn btn-outline-success" id="verify_loader"><span class="spinner-border loading-bh"></snap></button>
-                                </div>
-                                <div class="col-12 mt-4">
-                                    <label for="email" class="form-label"><b>Email</b></label>
-                                    <input required style="border: 1px solid black;" type="email" class="form-control" id="email" placeholder="Email ID">
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                    <label for="number" class="form-label"><b>Mobile Number</b></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="border: 1px solid black; border-right: 0px;">+91</span>
+                                        <input required type="text" style="border: 1px solid black;" class="form-control" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
+                                    </div>
                                 </div>
                                 <div class="col-12 mt-4">
                                     <label for="password" class="form-label"><b>Password</b></label>
@@ -156,11 +157,11 @@
                                         <!-- <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);"> -->
                                             <div class="card-body p-5 text-center">
                                             <!-- <b><h4>Verify</h4> -->
-                                            <b>OTP code was sent to you on your mobile number</b><br>
+                                            <b>OTP code was sent to you on your email id</b><br>
                                             <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
                                             <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
                                             <input id="token" type="hidden">
-                                            <span id="otp_temp"></span>
+                                            <!-- <span id="otp_temp"></span> -->
                                 
                                             <div class="otp-field mb-4">
                                                 <input id="otp_field_1" type="number"/>
@@ -236,19 +237,14 @@
 
                     const email_ele = document.getElementById('email')
                     const email = email_ele.value
+                    const email_validation = document.getElementById('email_validation')
 
                     const number_ele = document.getElementById('number')
                     const number = number_ele.value
-                    const number_validation = document.getElementById('number_validation')
 
-                    if (number === '' || !/^\d{10}$/.test(number)) {
-                            varify_button.style.display = 'block'
-                            varify_loader.style.display = 'none'
-                            number_ele.style.border = '2px red solid'
-                            number_validation.innerText = 'Please enter a valid phone number'
-                    }
+                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    else {
+                    if (emailPattern.test(email)) {
                         const url = `{% url 'generate_otp-list' %}`;
                         const csrftoken = '{{ csrf_token }}';
                         const data = {
@@ -274,25 +270,21 @@
                             $('#otpModal').modal('show')
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
-                            number_validation.innerText = 'OTP sent!'
-                            number_validation.style.color = 'green'
-                            number_ele.style.border = '1px black solid'
+                            email_validation.innerText = 'OTP sent!'
+                            email_validation.style.color = 'green'
+                            email_ele.style.border = '1px black solid'
                             token_inpt.value = response_data.otp_token
                             console.log(response_data.otp_token)
                             otp_token = response_data.otp_token
                             console.log(token_inpt.value)
-                            
-                            document.getElementById('otp_temp').innerHTML = response_data.otp
 
-                            // varify_button.disabled = true
-                            // number_ele.style.border = '2px green solid'
-                            // number_ele.disabled = true
-                            // number_validation.innerText = ''
+                            // document.getElementById('otp_temp').innerHTML = response_data.otp
+
 
                         } else {
                             if (response_data.already_exist){
-                            number_validation.innerText = 'Phone number already exist, please login'
-                            number_ele.style.border = '2px red solid'
+                            email_validation.innerText = 'Email Id already registered, please login'
+                            email_ele.style.border = '2px red solid'
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
 
@@ -301,6 +293,12 @@
                         }
                     }
 
+                    else{
+                        varify_button.style.display = 'block'
+                        varify_loader.style.display = 'none'
+                        email_ele.style.border = '2px red solid'
+                        email_validation.innerText = 'Please enter a valid email id'
+                    }
 
                 } catch (error) {
                     console.error(error);
@@ -319,12 +317,14 @@
             const varify_loader = document.getElementById("verify_loader")
             const number_ele = document.getElementById('number')
             const number = number_ele.value
-            const number_validation = document.getElementById('number_validation')
+            const email_ele = document.getElementById('email')
+            const email = email_ele.value
+            const email_validation = document.getElementById('email_validation')
 
             if (attempts_left === '3'){
-                number_validation.innerText = 'All attempts used, please re-verify'
-                number_validation.style.color = 'red'
-                number_ele.style.border = '2px red solid'
+                email_validation.innerText = 'All attempts used, please re-verify'
+                email_validation.style.color = 'red'
+                email_ele.style.border = '2px red solid'
                 $('#otpModal').modal('hide')
                 otp_btn_loader.style.display = 'none'
             }
@@ -353,6 +353,7 @@
                         const csrftoken = '{{ csrf_token }}';
                         const data = {
                         'number':number,
+                        'email':email,
                         'otp': user_otp,
                         'otp_token':token,
                         };
@@ -373,13 +374,13 @@
                             $('#otpModal').modal('hide')
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
-                            number_validation.style.color = 'green'
+                            email_validation.style.color = 'green'
                             varify_button.disabled = true
-                            number_ele.style.border = '2px green solid'
-                            number_ele.disabled = true
-                            number_validation.innerText = 'Number verified!'
+                            email_ele.style.border = '2px green solid'
+                            email_ele.disabled = true
+                            email_validation.innerText = 'Email verified!'
                             otp_btn_loader.style.display = 'none'
-                            document.getElementById('number_verified').value = 'yes'
+                            document.getElementById('email_verified').value = 'yes'
 
                         } else {
                             attempts_ele.innerText = response_data.attempts
@@ -387,9 +388,9 @@
                             otp_btn_loader.style.display = 'none'
 
                             if (response_data.attempts_exceeded){
-                                number_validation.innerText = 'All attempts used, please re-verify'
-                                number_validation.style.color = 'red'
-                                number_ele.style.border = '2px red solid'
+                                email_validation.innerText = 'All attempts used, please re-verify'
+                                email_validation.style.color = 'red'
+                                email_ele.style.border = '2px red solid'
                                 $('#otpModal').modal('hide')
                                 otp_btn_loader.style.display = 'none'
                             }
@@ -406,8 +407,8 @@
         async function register() {
             var form = document.getElementById('register_form');
             if (form.reportValidity()){
-                const number_verified_ele = document.getElementById('number_verified')
-                if (number_verified_ele.value === 'yes'){
+                const email_verified_ele = document.getElementById('email_verified')
+                if (email_verified_ele.value === 'yes'){
                     startLoader()
                     const token = document.getElementById("token").value
                     const first_name = document.getElementById('first_name').value
@@ -473,8 +474,8 @@
 
                 }
                 else{
-                    const number_validation = document.getElementById('number_validation')
-                    number_validation.innerText = 'Please verify mobile number'
+                    const email_validation = document.getElementById('email_validation')
+                    email_validation.innerText = 'Please verify email id'
                 }
 
             }

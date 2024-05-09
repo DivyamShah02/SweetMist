@@ -23,7 +23,7 @@
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sweet Mist - Order Detail">
-  <meta name="twitter:description" content="Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and 
+  <meta name="twitter:description" content="Access detailed information about your order, including itemized products, shipping details, and order status. Stay informed and
     track your order every step of the way.">
   <meta name="twitter:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
 
@@ -207,13 +207,13 @@
             </td>
             <td class="px-0 py-12 w-px-100">
               <p class="mb-2">Subtotal:</p>
-              <p class="mb-2">Discount:</p>
+              <!-- <p class="mb-2">Discount:</p> -->
               <p class="mb-2 border-bottom pb-2">Tax:</p>
               <p class="mb-0 pt-2">Total:</p>
             </td>
             <td class="text-end px-0 py-6 w-px-100">
               <p class="fw-medium mb-2">₹ {{order_total}}</p>
-              <p class="fw-medium mb-2">₹ 00.00</p>
+              <!-- <p class="fw-medium mb-2">₹ 00.00</p> -->
               <p class="fw-medium mb-2 border-bottom pb-2">₹ 00.00</p>
               <p class="fw-medium mb-0 pt-2">₹ {{order_total}}</p>
             </td>
@@ -274,13 +274,18 @@
   <script src="/static/js/main.js"></script>
 
   <script>
-    function saveAsPDF() {
+      function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function saveAsPDF() {
       document.getElementById('header').style.display = 'none';
       document.getElementById('breacrumb-section').style.display = 'none';
       document.getElementById('content-wrapper').style.display = 'none';
       document.getElementById('footer').style.display = 'none';
       document.getElementById('content').style.display = 'block';
       "use strict"; window.print();
+      await sleep(2000);
       document.getElementById('header').style.display = 'block';
       document.getElementById('breacrumb-section').style.display = 'block';
       document.getElementById('content-wrapper').style.display = 'block';

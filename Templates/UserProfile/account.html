@@ -223,8 +223,10 @@
                                             <br>
                                             <span>Spent: ₹ {{order.total_price}}</span>
                                             <br>
-                                            <a href="{% url 'order_detail-list' %}?order_id={{order.order_id}}" class="btn btn-sm-prm-outline m-1">View Order</a>
-                                            <a href="{% url 'invoice-list' %}?order_id={{order.order_id}}" class="btn btn-outline-dark m-1">Get invoice</a>
+                                            <a href="{% url 'order_detail-list' %}?order_id={{order.order_id}}" class="btn btn-sm-prm-outline m-1 mt-3">View Order</a>
+                                            {% if order.order_status != 'Unpaid' %}
+                                            <a href="{% url 'invoice-list' %}?order_id={{order.order_id}}" class="btn btn-outline-dark m-1 mt-3">Get invoice</a>
+                                            {% endif %}
                                             <br>
                                             <div class="nested-table">
                                                 <table class="table">

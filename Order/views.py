@@ -486,7 +486,7 @@ class OrderDetailsView(ViewSet):
                                 'qty':item.qty,
                             })
 
-                        if order_data.paid:
+                        if not order_data.paid:
                             got_payment_details, payment_details = get_payment_details(order_id=order_id)
 
                             if got_payment_details:
@@ -496,18 +496,20 @@ class OrderDetailsView(ViewSet):
                                     order_edit.pg_order_status = payment_details['payment_status']
                                     order_edit.pg_payment_id = payment_details['cf_payment_id']
                                     order_edit.save()
+                                    if not order_data.email_sent:
+                                        order_edit = Order.objects.get(order_id=order_id)
+                                        order_edit.email_sent = send_order_success_mail(order_id=order_id, to_email=request.user.email)
+                                        order_edit.save()      
 
                             else:
                                 payment_details = None
-                        
+
+                            
                         else:
                             got_payment_details = False
                             payment_details = None
                         
-                        if not order_data.email_sent:
-                            order_edit = Order.objects.get(order_id=order_id)
-                            order_edit.email_sent = send_order_success_mail(order_id=order_id, to_email=request.user.email)
-                            order_edit.save()                            
+                      
                         
                         
                         order_data = Order.objects.filter(user_id=request.user, order_id=order_id).first()
@@ -521,10 +523,41 @@ class OrderDetailsView(ViewSet):
                         order_status_text = []
                         
                         if order_status == 'Order Placed':
-                            head = f'Order was placed (Order ID: #{order_id})'
+                            head = f'Order was successfully placed (Order ID: #{order_id})'
                             body = f'{order_date}'
                             foot = f'Your order has been placed successfully'
                             order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                        
+                        if order_status == 'In Transit':
+                            head = f'Order was successfully placed (Order ID: #{order_id})'
+                            body = f'{order_date}'
+                            foot = f'Your order has been placed successfully'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                            
+                            in_transit_date = order_data.in_transit_date.strftime("%d %b, %Y")
+                            head = f'Order out for delivery'
+                            body = f'{in_transit_date}'
+                            foot = f'Your order has been handed to delivery partner and will be delivered shortly'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                            
+                        if order_status == 'Delivered':
+                            head = f'Order was successfully placed (Order ID: #{order_id})'
+                            body = f'{order_date}'
+                            foot = f'Your order has been placed successfully'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                            
+                            in_transit_date = order_data.in_transit_date.strftime("%d %b, %Y")
+                            head = f'Order out for delivery'
+                            body = f'{in_transit_date}'
+                            foot = f'Your order has been handed to delivery partner and will be delivered shortly'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                            
+                            delivery_date = order_data.delivery_date.strftime("%d %b, %Y")
+                            head = f'Order delivered'
+                            body = f'{delivery_date}'
+                            foot = f'Your order has been successfully delivered'
+                            order_status_text.append({'head':head, 'body':body, 'foot':foot})
+                        
 
                         data = {
                             'success': True,

@@ -127,7 +127,8 @@
         mm = parseInt(mm) + 1;
         mm = String(mm).padStart(2, '0');
     }
-    var timerdate = mm + '/' + dd + '/' + yyyy;
+    // var timerdate = mm + '/' + dd + '/' + yyyy;
+    var timerdate = '05' + '/' + '20' + '/' + '2024';
     // For demo preview end
 
     console.log(timerdate);

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Streamline your shopping experience with our secure and convenient checkout process. Complete your order seamlessly and enjoy your delicious desserts in no time.">
+    <meta name="keywords" content="checkout, shopping cart, secure checkout, online payment, order completion">
+    <meta name="author" content="Divyam Shah">
+    <link rel="canonical" href="https://www.sweetmist.in/check_out/">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Sweet Mist - Checkout">
+    <meta property="og:description" content="Streamline your shopping experience with our secure and convenient checkout process. Complete your order seamlessly and enjoy your delicious desserts in no time.">
+    <meta property="og:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
+    <meta property="og:url" content="https://www.sweetmist.in/check_out/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sweet Mist - Checkout">
+    <meta name="twitter:description" content="Streamline your shopping experience with our secure and convenient checkout process. Complete your order seamlessly and enjoy your delicious desserts in no time.">
+    <meta name="twitter:image" content="https://www.sweetmist.in/static/SweetMistLogo.png">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Sweet Mist",
+        "description": "Streamline your shopping experience with our secure and convenient checkout process. Complete your order seamlessly and enjoy your delicious desserts in no time.",
+        "url": "https://www.sweetmist.in/check_out/",
+        "logo": "https://www.sweetmist.in/static/SweetMistLogo.png",
+        "sameAs": [
+            "https://www.facebook.com/sweetmist",
+            "https://twitter.com/sweetmist",
+            "https://www.instagram.com/sweetmist_snehi"
+        ]
+        }
+    </script>
+    
+    <title>Sweet Mist - Checkout</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/otp.css" type="text/css">
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="{% url 'home-list' %}"><i class="fa fa-home"></i> Home</a>
+                        <a href="{% url 'shop-list' %}">Shop</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="checkout-section" style="padding-top: 10px;">
+        <div class="container">
+            <form id="checkout-form" class="checkout-form">
+                <div class="row">
+                    <div class="alert alert-danger" id="register_error" style="border: 1px solid red; display: none;" role="alert">
+                        Error occured, please try again!
+                    </div>
+                    <div class="alert alert-danger" id="register_error_number_not_verified" style="border: 1px solid red; display: none;" role="alert">
+                        Mobile number not verified, please verify!
+                    </div>
+                    <div class="alert alert-danger" id="register_error_email_already_registered" style="border: 1px solid red; display: none;" role="alert">
+                        Email Id is already registered, please Login!
+                    </div>
+                    {% if user_logged_in == True %}
+                    <div class="col-lg-6">
+                        <h4 class="text-sm-prm">Billing Details</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="email" value="{{user_data.email}}" readonly style="background-color: rgba(128, 128, 128, 0.432);">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="phone">Phone number<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="phone" value="{{user_data.number}}" readonly style="background-color: rgba(128, 128, 128, 0.432);">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="first_name">First Name<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="first_name" value="{{user_data.first_name}}">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="last_name">Last Name<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="last_name" value="{{user_data.last_name}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="street">Primary Address<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="primary_address" class="street-first" value="{{user_data.primary_address}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="street">Secondary Address<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="secondary_address" class="street-first" value="{{user_data.secondary_address}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="pincode">Postcode / ZIP<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="pincode" value="{{user_data.pincode}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="city">Town / City<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="city" value="{{user_data.city}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="state">State<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="state" value="{{user_data.state}}">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="country">Country<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="country" value="{{user_data.country}}">
+                            </div>
+
+                            <!-- <div class="col-lg-12">
+                                <div class="create-item">
+                                    <label class="label-sm-prm" for="acc-create">
+                                        Save changed details?
+                                        <input type="checkbox" id="save-details">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-lg-6">
+                        <div class="checkout-content">
+                            <a href="{% url 'login-list' %}" class="btn btn-sm-prm-outline w-100">Have an account? Login</a>
+                        </div>
+                        <h4 class="text-sm-prm">Biiling Details</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
+                                <input required type="email" id="email">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="pass">Password<span style="color:black !important;"> *</span></label>
+                                <input required type="password" id="pass">
+                            </div>
+                            <label class="label-sm-prm" for="number">Phone number<span style="color:black !important;"> *</span></label>
+                            <div class="col-lg-6 mb-4">
+                                <div class="input-group">
+                                    <span class="input-group-text rounded-0">+91</span>
+                                    <input required type="text" class="form-control rounded-0" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
+                                    <input type="hidden" id="number_verified" value="no">
+                                </div>
+                                <div style="color: red;" id="number_validation"></div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <!-- <button type="button" style="padding-top: 11px; padding-bottom: 11px; width: 100%;" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#otpModal">Verify</button> -->
+                                <button onclick="sentOTP()" id="verify_button" type="button" style="width: 100%; padding: 10px;" class="btn btn-outline-success"><b>Verify</b></button>
+                                <button type="button" disabled style="width: 100%; display: none;" class="btn btn-outline-success" id="verify_loader"><span class="spinner-border loading-bh"></snap></button>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="fir">First Name<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="first_name">
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="label-sm-prm" for="last">Last Name<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="last_name">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="street">Primary Address<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="primary_address" class="street-first">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="street">Secondary Address<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="secondary_address" class="street-first">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="zip">Postcode / ZIP<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="pincode">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="town">Town / City<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="city">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="town">State<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="state">
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="label-sm-prm" for="cun">Country<span style="color:black !important;"> *</span></label>
+                                <input required type="text" id="country">
+                            </div>
+
+                            <!-- <div class="col-lg-12">
+                                <div class="create-item">
+                                    <label class="label-sm-prm" for="acc-create">
+                                        Save changed details?
+                                        <input type="checkbox" id="save-details">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="col-lg-6">
+                        <!-- <div class="checkout-content">
+                            <input type="text" placeholder="Enter Your Coupon Code">
+                        </div> -->
+                        <div class="place-order">
+                            <h4 class="text-sm-prm">Your Order</h4>
+                            <div class="order-total">
+                                <ul class="order-table">
+                                    <li>Product <span>Total</span></li>
+                                    
+                                    {% for item in items %}
+                                    <li class="fw-normal">{{item.title}} x {{item.qty}} <span>₹ {{item.total_price}}</span></li>
+                                    {% endfor %}
+
+                                    <li class="fw-normal">Subtotal <span>₹ {{cart_total}}</span></li>
+                                    <li class="total-price">Total <span>₹ {{cart_total}}</span></li>
+                                </ul>
+                                <!-- <div class="payment-check">
+                                    <div class="pc-item">
+                                        <label class="label-sm-prm" for="pc-check">
+                                            Cheque Payment
+                                            <input type="checkbox" id="pc-check">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="pc-item">
+                                        <label class="label-sm-prm" for="pc-paypal">
+                                            Paypal
+                                            <input type="checkbox" id="pc-paypal">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div> -->
+                                {% if cart_checkout == True %}
+                                <div class="order-btn">
+                                    <!-- <a style="color: white;" href="{ url 'place_order-list' %}?cart_checkout=True" class="site-btn place-btn">Place Order</a> -->
+                                    <a style="color: white;" onclick="place_order()" class="site-btn place-btn">Place Order</a>
+                                </div>
+                                {% else %}
+                                <div class="order-btn">
+                                    <!-- <a style="color: white;" href="{ url 'place_order-list' %}?qty={{qty}}&product_id={{product_id}}" class="site-btn place-btn">Place Order</a> -->
+                                    <a style="color: white;" onclick="place_order()" class="site-btn place-btn">Place Order</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    <!-- OTP Modal -->
+    <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title" id="otpModalLabel"><b>Verify OTP</b></h4>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body">            
+                <div class="row justify-content-center">
+                    <!-- <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;"> -->
+                    <!-- <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);"> -->
+                        <div class="card-body p-5 text-center">
+                        <!-- <b><h4>Verify</h4> -->
+                        <b>OTP code was sent to you on your mobile number</b><br>
+                        <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
+                        <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
+                        <input id="token" type="hidden">
+                        <span id="otp_temp"></span>
+            
+                        <div class="otp-field mb-4">
+                            <input id="otp_field_1" type="number"/>
+                            <input id="otp_field_2" type="number" disabled />
+                            <input id="otp_field_3" type="number" disabled />
+                            <input id="otp_field_4" type="number" disabled />
+                            <input id="otp_field_5" type="number" disabled />
+                            <input id="otp_field_6" type="number" disabled />
+                        </div>
+            
+                            <div class="d-flex justify-content-center">
+                                <button onclick="checkOTP()" id="otp-btn" class="btn btn-success mb-3 d-flex align-items-center">
+                                    &nbsp;Verify&nbsp;<span id="otp-btn-loader" style="display: none;" class="spinner-border loading-bh"></snap>
+                                </button>
+                            </div>
+                            <!-- <button id="otp-btn-loader" style="display: none;" class="btn btn-success mb-3">
+                                <span class="spinner-border loading-bh"></snap>
+                            </button> -->
+
+                        <p class="resend text-muted mb-0">
+                            <b>Didn't receive code? <span style="cursor: pointer; color: black;" onclick="sentOTP()"><u>Request again</u></span></b>
+                        </p>
+                        </div>
+                    <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    {% include "related_products.html" %}
+    {% include "footer.html" %}
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.zoom.min.js"></script>
+    <script src="/static/js/jquery.dd.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/otp.js"></script>
+
+    
+    {% if user_logged_in == True %}
+
+    <script>
+        async function place_order(){
+            startLoader()
+            const change_in_data = checkDataChanges()
+            if (change_in_data) {
+                var form = document.getElementById('checkout-form');
+                if (form.reportValidity()) {
+                    const first_name = document.getElementById('first_name').value
+                    const last_name = document.getElementById('last_name').value
+                    const primary_address = document.getElementById('primary_address').value
+                    const secondary_address = document.getElementById('secondary_address').value
+                    const city = document.getElementById('city').value
+                    const state = document.getElementById('state').value
+                    const country = document.getElementById('country').value
+                    const pincode = document.getElementById('pincode').value
+
+                    try {
+                        const url = `{% url 'edit_account-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                            'first_name':first_name,
+                            'last_name':last_name,
+                            'primary_address':primary_address,
+                            'secondary_address':secondary_address,
+                            'city':city,
+                            'state':state,
+                            'country':country,
+                            'pincode':pincode,
+                        };
+
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+
+                        if (response_data.success) {
+                            '{% if cart_checkout == True %}'
+                            window.location.href = "{% url 'payment-list' %}?cart_checkout=True";
+                            '{% else %}'
+                            window.location.href = "{% url 'payment-list' %}?qty={{qty}}&product_id={{product_id}}";
+                            '{% endif %}'
+
+                        } else {
+                            const error_alert_ele = document.getElementById('erroralert');
+                            error_alert_ele.style.display = 'block';
+                        }
+
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+                }
+
+            }
+            else{
+                '{% if cart_checkout == True %}'
+                window.location.href = "{% url 'payment-list' %}?cart_checkout=True";
+                '{% else %}'
+                window.location.href = "{% url 'payment-list' %}?qty={{qty}}&product_id={{product_id}}";
+                '{% endif %}'
+            }
+            stopLoader()
+        }
+
+        function checkDataChanges() {
+            // var selectedInputIds = ["fir", "last", "primary_address", "secondary_address", "zip", "town", "state", "cun"];
+
+            var dataChanged = false;
+            selectedInputIds.forEach(function(id) {
+                var input = document.getElementById(id);
+                if (input.value !== initialValues[id]) {
+                    dataChanged = true;
+                    console.log("Input " + input.id + " has been changed.");
+                    return;
+                }
+            });
+
+            if (dataChanged) {
+                return true
+            } else {
+                console.log("No changes detected.");
+                return false
+            }
+        }
+
+        var initialValues = {};
+        var selectedInputIds = ["first_name","last_name","primary_address","secondary_address","pincode","city","state","country"];
+        selectedInputIds.forEach(function(id) {
+            var input = document.getElementById(id);
+            initialValues[id] = input.value;
+        });
+
+        async function EditAccountData() {
+            var form = document.getElementById('checkout-form');
+            if (form.reportValidity()) {
+                const first_name = document.getElementById('first_name').value
+                const last_name = document.getElementById('last_name').value
+                const primary_address = document.getElementById('primary_address').value
+                const secondary_address = document.getElementById('secondary_address').value
+                const city = document.getElementById('city').value
+                const state = document.getElementById('state').value
+                const country = document.getElementById('country').value
+                const pincode = document.getElementById('pincode').value
+
+                try {
+                    const url = `{% url 'edit_account-list' %}`;
+                    const csrftoken = '{{ csrf_token }}';
+                    const data = {
+                        'first_name':first_name,
+                        'last_name':last_name,
+                        'primary_address':primary_address,
+                        'secondary_address':secondary_address,
+                        'city':city,
+                        'state':state,
+                        'country':country,
+                        'pincode':pincode,
+                    };
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const response_data = await response.json();
+                    console.log(response_data)
+
+                    if (response_data.success) {
+                        location.reload();
+
+                    } else {
+                        const error_alert_ele = document.getElementById('erroralert');
+                        error_alert_ele.style.display = 'block';
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                }
+
+            }
+
+        }
+    
+
+    </script>
+
+    {% else %}
+
+    <script>
+        async function place_order() {
+            startLoader()
+            var form = document.getElementById('checkout-form');
+            const number_verified_ele = document.getElementById('number_verified')
+                if (number_verified_ele.value === 'yes'){
+                    if (form.reportValidity()){
+                        const token = document.getElementById("token").value
+                        const email = document.getElementById('email').value
+                        const pass = document.getElementById('pass').value
+                        const number = document.getElementById('number').value
+                        const first_name = document.getElementById('first_name').value
+                        const last_name = document.getElementById('last_name').value
+                        const primary_address = document.getElementById('primary_address').value
+                        const secondary_address = document.getElementById('secondary_address').value
+                        const city = document.getElementById('city').value
+                        const state = document.getElementById('state').value
+                        const country = document.getElementById('country').value
+                        const pincode = document.getElementById('pincode').value
+
+                        try {
+                            const url = `{% url 'register-list' %}`;
+                            const csrftoken = '{{ csrf_token }}';
+                            const data = {
+                                'from_checkout':true,
+                                'otp_token':token,
+                                'first_name':first_name,
+                                'last_name':last_name,
+                                'number':number,
+                                'email':email,
+                                'password':pass,
+                                'primary_address':primary_address,
+                                'secondary_address':secondary_address,
+                                'city':city,
+                                'state':state,
+                                'country':country,
+                                'pincode':pincode,
+                            };
+
+                            const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: JSON.stringify(data)
+                            });
+
+                            const response_data = await response.json();
+                            console.log(response_data)
+                            
+                            if (response_data.success) {
+                                console.log('Registered')
+                                '{% if cart_checkout == True %}'
+                                window.location.href = "{% url 'payment-list' %}?cart_checkout=True";
+                                '{% else %}'
+                                window.location.href = "{% url 'payment-list' %}?qty={{qty}}&product_id={{product_id}}";
+                                '{% endif %}'
+                                // $('#otpModal').modal('hide')
+                                // $('#registerModal').modal('show')
+                                // register_btn_loader.style.display = 'none'
+                                // location.reload();
+                            } else {
+                                // register_btn_loader.style.display = 'none'
+                                
+                                if (response_data.otp_not_verified){
+                                    document.getElementById('register_error_number_not_verified').style.display = 'block'
+                                    document.getElementById('register_error_number_not_verified').scrollIntoView()
+
+                                }
+                                if (response_data.email_already_exists){
+                                    document.getElementById('register_error_email_already_registered').style.display = 'block'
+                                    document.getElementById('register_error_email_already_registered').scrollIntoView()
+
+                                }
+                                else{
+                                    document.getElementById('register_error').style.display = 'block'
+                                    document.getElementById('register_error').scrollIntoView()
+
+                                }
+
+                            }
+                            
+                        } catch (error) {
+                            console.error(error);
+                        }
+
+                    }
+
+                }
+                else{
+                    const number_validation = document.getElementById('number_validation')
+                    number_validation.innerText = 'Please verify mobile number'
+                    document.getElementById('number').scrollIntoView();
+                }
+            stopLoader()
+        }
+
+        var otp_token;
+
+        async function sentOTP() {
+            try {
+                    const attempts_ele = document.getElementById('attempts_left')
+                    attempts_ele.innerText = 1
+                    const wrong_otp = document.getElementById('wrong_otp')
+                    wrong_otp.style.display = 'none'
+
+                    const varify_button = document.getElementById("verify_button")
+                    varify_button.style.display = 'none'
+                    const varify_loader = document.getElementById("verify_loader")
+                    varify_loader.style.display = 'block'
+
+                    const token_inpt = document.getElementById("token")
+
+                    const email_ele = document.getElementById('email')
+                    const email = email_ele.value
+
+                    const number_ele = document.getElementById('number')
+                    const number = number_ele.value
+                    const number_validation = document.getElementById('number_validation')
+
+                    if (number === '' || !/^\d{10}$/.test(number)) {
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_ele.style.border = '2px red solid'
+                            number_validation.innerText = 'Please enter a valid phone number'
+                    }
+
+                    else {
+                        const url = `{% url 'generate_otp-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                        'number': number,
+                        'email':email
+                        };
+
+                        const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data) // Convert the data to JSON format
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+                        
+                        if (response_data.success) {
+                            console.log('new_here')
+                            $('#otpModal').modal('show')
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_validation.innerText = 'OTP sent!'
+                            number_validation.style.color = 'green'
+                            number_ele.style.border = '1px black solid'
+                            token_inpt.value = response_data.otp_token
+                            console.log(response_data.otp_token)
+                            otp_token = response_data.otp_token
+                            console.log(token_inpt.value)
+
+                            document.getElementById('otp_temp').innerHTML = response_data.otp
+
+                            // varify_button.disabled = true
+                            // number_ele.style.border = '2px green solid'
+                            // number_ele.disabled = true
+                            // number_validation.innerText = ''
+
+                        } else {
+                            if (response_data.already_exist){
+                            number_validation.innerText = 'Phone number already exist, please login'
+                            number_ele.style.border = '2px red solid'
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+
+                            }
+            
+                        }
+                    }
+
+
+                } catch (error) {
+                    console.error(error);
+                }
+
+        }
+
+        async function checkOTP() {
+            const attempts_ele = document.getElementById('attempts_left')
+            const attempts_left = attempts_ele.innerText
+            const wrong_otp = document.getElementById('wrong_otp')
+            const otp_btn_loader = document.getElementById('otp-btn-loader')
+            otp_btn_loader.style.display = 'block'
+
+            const varify_button = document.getElementById("verify_button")
+            const varify_loader = document.getElementById("verify_loader")
+            const number_ele = document.getElementById('number')
+            const number = number_ele.value
+            const number_validation = document.getElementById('number_validation')
+
+            if (attempts_left === '3'){
+                number_validation.innerText = 'All attempts used, please re-verify'
+                number_validation.style.color = 'red'
+                number_ele.style.border = '2px red solid'
+                $('#otpModal').modal('hide')
+                otp_btn_loader.style.display = 'none'
+            }
+            else{
+                otp_field_1_ele = document.getElementById('otp_field_1')
+                otp_field_1_value = otp_field_1_ele.value
+                otp_field_2_ele = document.getElementById('otp_field_2')
+                otp_field_2_value = otp_field_2_ele.value
+                otp_field_3_ele = document.getElementById('otp_field_3')
+                otp_field_3_value = otp_field_3_ele.value
+                otp_field_4_ele = document.getElementById('otp_field_4')
+                otp_field_4_value = otp_field_4_ele.value
+                otp_field_5_ele = document.getElementById('otp_field_5')
+                otp_field_5_value = otp_field_5_ele.value
+                otp_field_6_ele = document.getElementById('otp_field_6')
+                otp_field_6_value = otp_field_6_ele.value
+
+                user_otp = otp_field_1_value + otp_field_2_value + otp_field_3_value + otp_field_4_value + otp_field_5_value + otp_field_6_value
+                console.log(user_otp)
+
+                const token_inpt = document.getElementById("token")
+                token = token_inpt.value
+
+                try {
+                        const url = `{% url 'check_otp-list' %}`;
+                        const csrftoken = '{{ csrf_token }}';
+                        const data = {
+                        'number':number,
+                        'otp': user_otp,
+                        'otp_token':token,
+                        };
+
+                        const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify(data) // Convert the data to JSON format
+                        });
+
+                        const response_data = await response.json();
+                        console.log(response_data)
+                        
+                        if (response_data.success) {
+                            $('#otpModal').modal('hide')
+                            varify_button.style.display = 'block'
+                            varify_loader.style.display = 'none'
+                            number_validation.style.color = 'green'
+                            varify_button.disabled = true
+                            number_ele.style.border = '2px green solid'
+                            number_ele.disabled = true
+                            number_validation.innerText = 'Number verified!'
+                            otp_btn_loader.style.display = 'none'
+                            document.getElementById('number_verified').value = 'yes'
+
+                        } else {
+                            attempts_ele.innerText = response_data.attempts
+                            wrong_otp.style.display = 'block'
+                            otp_btn_loader.style.display = 'none'
+
+                            if (response_data.attempts_exceeded){
+                                number_validation.innerText = 'All attempts used, please re-verify'
+                                number_validation.style.color = 'red'
+                                number_ele.style.border = '2px red solid'
+                                $('#otpModal').modal('hide')
+                                otp_btn_loader.style.display = 'none'
+                            }
+
+                        }
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+            }
+
+        }
+
+    </script>
+    
+    {% endif %}    
+</body>
+
+</html>

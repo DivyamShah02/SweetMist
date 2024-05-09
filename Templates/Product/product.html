@@ -50,7 +50,7 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Product Shop Section Begin -->
-    <section class="product-shop spad page-details">
+    <section class="product-shop page-details">
         <div class="container">
             <div class="row">
                 <!-- <div class="col-lg-3">
@@ -203,8 +203,16 @@
                                 <div class="pd-title">
                                     <span style="color: var(--primary-color);">{{product_data.category}}</span>
                                     <!-- <span>{{product_data.slug}}</span> -->
-                                    <h3 style="color: var(--secondary-color);"><b>{{product_data.title}}<b></h3>
-                                    <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                                    <h3 style="color: var(--secondary-color);"><b>{{product_data.title}}</b></h3>
+                                    <a style="cursor: pointer;" class="heart-icon" id="heart" onclick="
+                                        document.getElementById('fill_heart').style.display = 'block';
+                                        document.getElementById('heart').style.display = 'none';"><i class="icon_heart_alt"></i></a>
+                                    <a style="cursor: pointer; display: none;" id="fill_heart" onclick="
+                                    document.getElementById('fill_heart').style.display = 'none';
+                                    document.getElementById('heart').style.display = 'block';" class="heart-icon text-sm-prm"><i class="icon_heart"></i></a>
+                                    {% if product_data.active != True%}
+                                    <h5 class="text-sm-prm">Launching Soon!</h5>
+                                    {% endif %}
                                 </div>
                                 <div class="pd-rating">
                                     <i class="fa fa-star"></i>
@@ -265,22 +273,20 @@
                                 <div>
                                     <button onclick="buy_now()" class="primary-btn w-100 green_bg mb-3" id="buy_now_btn">Buy Now</button>
                                 </div>
-                                <ul class="pd-tags">
-                                    <li><span>CATEGORIES</span>: {{product_data.category}}</li>
+                                <ul class="pd-tags" style="padding-left: 0 !important;">
+                                    <li><span>CATEGORY</span>: {{product_data.category}}</li>
                                     <li><span>TAGS</span>: {{product_data.tags}}</li>
                                 </ul>
                                 <div class="pd-share">
-                                    <div class="p-code">Sku : 00012</div>
+                                    <div class="p-code">Sku : {{product_data.sku}}</div>
                                     <div class="pd-social">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
+                                        <a href="https://www.instagram.com/sweetmist_snehi" class="text-sm-prm"><i class="ti-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="product-tab">
+                    <div class="product-tab" style="display: none;">
                         <div class="tab-item">
                             <ul class="nav" role="tablist">
                                 <li>
@@ -451,10 +457,43 @@
     </section>
     <!-- Product Shop Section End -->
 
+    <div class="modal fade" id="launchModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-sm-prm" id="launchModalLabel">Launching Soon</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              This product is going to launch very soon! Stay tuned.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     {% include "related_products.html" %}
     {% include "footer.html" %}
 
+    {% if product_data.active != True%}
+    <script>
+        async function add_to_cart() {
+            var launchModal = document.getElementById('launchModal');
+            var modal = new bootstrap.Modal(launchModal);
+            modal.show();
+        }
+    
+        function buy_now(){
+            var launchModal = document.getElementById('launchModal');
+            var modal = new bootstrap.Modal(launchModal);
+            modal.show();
+        }
+    
+    </script>
+    {% else %}
     <script>
         async function add_to_cart() {
         try {
@@ -498,6 +537,8 @@
         }
     
     </script>
+    {% endif %}
+
 
     <!-- Js Plugins -->
     <script src="/static/js/jquery-3.3.1.min.js"></script>
@@ -510,6 +551,9 @@
     <script src="/static/js/jquery.slicknav.js"></script>
     <script src="/static/js/owl.carousel.min.js"></script>
     <script src="/static/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

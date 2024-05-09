@@ -49,11 +49,16 @@ class RegisterViewSet(ViewSet):
             pincode = request.data.get('pincode')
             from_checkout = request.data.get('from_checkout')
 
-            if not Otp.objects.filter(token=otp_token, active=False, number=number).first():
+            # if not Otp.objects.filter(token=otp_token, active=False, number=number).first():
+            if not Otp.objects.filter(token=otp_token, active=False, email=email).first():
                 return Response({'success': False, 'reason':'OTP is not verified.', 'otp_not_verified':True, 'email_already_exists':False}, status=status.HTTP_400_BAD_REQUEST)
 
-            if UserData.objects.filter(email=email).first():
+            # if UserData.objects.filter(email=email).first():
+            #     return Response({'success': False, 'reason':'Email Id already exists.', 'otp_not_verified':False, 'email_already_exists':True}, status=status.HTTP_400_BAD_REQUEST)
+
+            if UserData.objects.filter(number=number).first():
                 return Response({'success': False, 'reason':'Email Id already exists.', 'otp_not_verified':False, 'email_already_exists':True}, status=status.HTTP_400_BAD_REQUEST)
+
 
             new_id = True
             while new_id:
@@ -94,7 +99,8 @@ class GenerateOTPViewSet(ViewSet):
             number = f'+91 {number}'
             email = request.data.get('email')
             
-            user_exist = UserData.objects.filter(number=number).first()
+            # user_exist = UserData.objects.filter(number=number).first()
+            user_exist = UserData.objects.filter(email=email).first()
             
             if user_exist and module == 'register':
                 return Response({'success': False, 'reason':'User alreaady exist.', 'error_occured':False, 'already_exist': True}, status=status.HTTP_400_BAD_REQUEST)
@@ -104,14 +110,14 @@ class GenerateOTPViewSet(ViewSet):
 
             gen_otp = random.randint(111111, 999999)
             token = secrets.token_hex(15)
-            new_otp = Otp(session_id=session_token, otp=str(gen_otp), token=token, number=number, attempts=1)
+            # new_otp = Otp(session_id=session_token, otp=str(gen_otp), token=token, number=number, attempts=1)
+            new_otp = Otp(session_id=session_token, otp=str(gen_otp), token=token, email=email, attempts=1)
             new_otp.save()
             print(gen_otp)
-            # send_otp_mail(otp=gen_otp, to_email=email)
-
+            send_otp_mail(otp=gen_otp, to_email=email)
             
-            # return Response({'success': True, 'otp_token': token}, status=status.HTTP_201_CREATED)
-            return Response({'success': True, 'otp_token': token, 'otp':gen_otp}, status=status.HTTP_201_CREATED)
+            return Response({'success': True, 'otp_token': token}, status=status.HTTP_201_CREATED)
+            # return Response({'success': True, 'otp_token': token, 'otp':gen_otp}, status=status.HTTP_201_CREATED)
         except Exception as e:
             log_error(request, e)
             return Response({'success': False, 'reason':f'{e}', 'error_occured':True, 'already_exist': False}, status=status.HTTP_400_BAD_REQUEST)
@@ -122,11 +128,13 @@ class CheckOTPViewSet(ViewSet):
         try:
             session_token = request.session.get('session_token')
             user_otp = request.data.get('otp')
+            email = request.data.get('email')
             user_number = request.data.get('number')
             user_number = f'+91 {user_number}'
             otp_token = request.data.get('otp_token')
             attempts = 0
-            otp_from_db = Otp.objects.filter(session_id=session_token, token=otp_token, number=user_number).first()
+            # otp_from_db = Otp.objects.filter(session_id=session_token, token=otp_token, number=user_number).first()
+            otp_from_db = Otp.objects.filter(session_id=session_token, token=otp_token, email=email).first()
 
             if otp_from_db:
                 real_otp = otp_from_db.otp
@@ -327,10 +335,12 @@ class ChangePasswordView(ViewSet):
                 return Response({'success': False, 'reason':'Password doesnot match.', 'otp_not_verified':False, 'password_doesnot_match':True}, status=status.HTTP_400_BAD_REQUEST)                                
             
 
-            if not Otp.objects.filter(token=otp_token, active=False, number=number).first():
+            # if not Otp.objects.filter(token=otp_token, active=False, number=number).first():
+            if not Otp.objects.filter(token=otp_token, active=False, email=email).first():
                 return Response({'success': False, 'reason':'OTP is not verified.', 'otp_not_verified':True, 'password_doesnot_match':False}, status=status.HTTP_400_BAD_REQUEST)
 
-            user_data = UserData.objects.filter(number=number).first()
+            # user_data = UserData.objects.filter(number=number).first()
+            user_data = UserData.objects.filter(email=email).first()
             user = User.objects.filter(username=user_data.user_id).first()
             user.set_password(password)
             user.save()

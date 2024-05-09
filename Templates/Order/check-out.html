@@ -85,11 +85,11 @@
                     <div class="alert alert-danger" id="register_error" style="border: 1px solid red; display: none;" role="alert">
                         Error occured, please try again!
                     </div>
-                    <div class="alert alert-danger" id="register_error_number_not_verified" style="border: 1px solid red; display: none;" role="alert">
-                        Mobile number not verified, please verify!
+                    <div class="alert alert-danger" id="register_error_email_not_verified" style="border: 1px solid red; display: none;" role="alert">
+                        Email Id not verified, please verify!
                     </div>
                     <div class="alert alert-danger" id="register_error_email_already_registered" style="border: 1px solid red; display: none;" role="alert">
-                        Email Id is already registered, please Login!
+                        Mobile number is already registered, please Login!
                     </div>
                     {% if user_logged_in == True %}
                     <div class="col-lg-6">
@@ -155,21 +155,21 @@
                         <h4 class="text-sm-prm">Biiling Details</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
-                                <input required type="email" id="email">
+                                <label class="label-sm-prm" for="number">Phone number<span style="color:black !important;"> *</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text rounded-0">+91</span>
+                                    <input required type="text" class="form-control rounded-0" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
+                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <label class="label-sm-prm" for="pass">Password<span style="color:black !important;"> *</span></label>
                                 <input required type="password" id="pass">
                             </div>
-                            <label class="label-sm-prm" for="number">Phone number<span style="color:black !important;"> *</span></label>
+                            <label class="label-sm-prm" for="email">Email Address<span style="color:black !important;"> *</span></label>
                             <div class="col-lg-6 mb-4">
-                                <div class="input-group">
-                                    <span class="input-group-text rounded-0">+91</span>
-                                    <input required type="text" class="form-control rounded-0" id="number" placeholder="0000000000" pattern="[0-9]*" maxlength="10" minlength="10" required>
-                                    <input type="hidden" id="number_verified" value="no">
-                                </div>
-                                <div style="color: red;" id="number_validation"></div>
+                                <input required type="email" style="margin-bottom: 0 !important;" id="email">
+                                <input type="hidden" id="email_verified" value="no">
+                                <div style="color: red;" id="email_validation"></div>
                             </div>
                             <div class="col-lg-6 mb-4">
                                 <!-- <button type="button" style="padding-top: 11px; padding-bottom: 11px; width: 100%;" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#otpModal">Verify</button> -->
@@ -288,11 +288,11 @@
                     <!-- <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);"> -->
                         <div class="card-body p-5 text-center">
                         <!-- <b><h4>Verify</h4> -->
-                        <b>OTP code was sent to you on your mobile number</b><br>
+                        <b>OTP code was sent to you on your email id</b><br>
                         <u><span><b>Attempts left : </b><span id="attempts_left">1</span>/3</span></u><br>
                         <span style="color: red; display: none;" id="wrong_otp"><u><b>Wrong OTP! Please enter again</b></u></span><br><br>
                         <input id="token" type="hidden">
-                        <span id="otp_temp"></span>
+                        <!-- <span id="otp_temp"></span> -->
             
                         <div class="otp-field mb-4">
                             <input id="otp_field_1" type="number"/>
@@ -505,8 +505,8 @@
         async function place_order() {
             startLoader()
             var form = document.getElementById('checkout-form');
-            const number_verified_ele = document.getElementById('number_verified')
-                if (number_verified_ele.value === 'yes'){
+            const email_verified_ele = document.getElementById('email_verified')
+                if (email_verified_ele.value === 'yes'){
                     if (form.reportValidity()){
                         const token = document.getElementById("token").value
                         const email = document.getElementById('email').value
@@ -567,11 +567,11 @@
                                 // register_btn_loader.style.display = 'none'
                                 
                                 if (response_data.otp_not_verified){
-                                    document.getElementById('register_error_number_not_verified').style.display = 'block'
-                                    document.getElementById('register_error_number_not_verified').scrollIntoView()
+                                    document.getElementById('register_error_email_not_verified').style.display = 'block'
+                                    document.getElementById('register_error_email_not_verified').scrollIntoView()
 
                                 }
-                                if (response_data.email_already_exists){
+                                else if (response_data.email_already_exists){
                                     document.getElementById('register_error_email_already_registered').style.display = 'block'
                                     document.getElementById('register_error_email_already_registered').scrollIntoView()
 
@@ -592,9 +592,9 @@
 
                 }
                 else{
-                    const number_validation = document.getElementById('number_validation')
-                    number_validation.innerText = 'Please verify mobile number'
-                    document.getElementById('number').scrollIntoView();
+                    const email_validation = document.getElementById('email_validation')
+                    email_validation.innerText = 'Please verify email id'
+                    document.getElementById('email').scrollIntoView();
                 }
             stopLoader()
         }
@@ -617,24 +617,20 @@
 
                     const email_ele = document.getElementById('email')
                     const email = email_ele.value
+                    const email_validation = document.getElementById('email_validation')
 
                     const number_ele = document.getElementById('number')
                     const number = number_ele.value
-                    const number_validation = document.getElementById('number_validation')
 
-                    if (number === '' || !/^\d{10}$/.test(number)) {
-                            varify_button.style.display = 'block'
-                            varify_loader.style.display = 'none'
-                            number_ele.style.border = '2px red solid'
-                            number_validation.innerText = 'Please enter a valid phone number'
-                    }
+                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    else {
+                    if (emailPattern.test(email)) {
                         const url = `{% url 'generate_otp-list' %}`;
                         const csrftoken = '{{ csrf_token }}';
                         const data = {
                         'number': number,
-                        'email':email
+                        'email':email,
+                        'module':'register'
                         };
 
                         const response = await fetch(url, {
@@ -654,25 +650,21 @@
                             $('#otpModal').modal('show')
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
-                            number_validation.innerText = 'OTP sent!'
-                            number_validation.style.color = 'green'
-                            number_ele.style.border = '1px black solid'
+                            email_validation.innerText = 'OTP sent!'
+                            email_validation.style.color = 'green'
+                            email_ele.style.border = '1px black solid'
                             token_inpt.value = response_data.otp_token
                             console.log(response_data.otp_token)
                             otp_token = response_data.otp_token
                             console.log(token_inpt.value)
 
-                            document.getElementById('otp_temp').innerHTML = response_data.otp
+                            // document.getElementById('otp_temp').innerHTML = response_data.otp
 
-                            // varify_button.disabled = true
-                            // number_ele.style.border = '2px green solid'
-                            // number_ele.disabled = true
-                            // number_validation.innerText = ''
 
                         } else {
                             if (response_data.already_exist){
-                            number_validation.innerText = 'Phone number already exist, please login'
-                            number_ele.style.border = '2px red solid'
+                            email_validation.innerText = 'Email Id already registered, please login'
+                            email_ele.style.border = '2px red solid'
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
 
@@ -681,6 +673,12 @@
                         }
                     }
 
+                    else{
+                        varify_button.style.display = 'block'
+                        varify_loader.style.display = 'none'
+                        email_ele.style.border = '2px red solid'
+                        email_validation.innerText = 'Please enter a valid email id'
+                    }
 
                 } catch (error) {
                     console.error(error);
@@ -699,12 +697,14 @@
             const varify_loader = document.getElementById("verify_loader")
             const number_ele = document.getElementById('number')
             const number = number_ele.value
-            const number_validation = document.getElementById('number_validation')
+            const email_ele = document.getElementById('email')
+            const email = email_ele.value
+            const email_validation = document.getElementById('email_validation')
 
             if (attempts_left === '3'){
-                number_validation.innerText = 'All attempts used, please re-verify'
-                number_validation.style.color = 'red'
-                number_ele.style.border = '2px red solid'
+                email_validation.innerText = 'All attempts used, please re-verify'
+                email_validation.style.color = 'red'
+                email_ele.style.border = '2px red solid'
                 $('#otpModal').modal('hide')
                 otp_btn_loader.style.display = 'none'
             }
@@ -733,6 +733,7 @@
                         const csrftoken = '{{ csrf_token }}';
                         const data = {
                         'number':number,
+                        'email':email,
                         'otp': user_otp,
                         'otp_token':token,
                         };
@@ -753,13 +754,13 @@
                             $('#otpModal').modal('hide')
                             varify_button.style.display = 'block'
                             varify_loader.style.display = 'none'
-                            number_validation.style.color = 'green'
+                            email_validation.style.color = 'green'
                             varify_button.disabled = true
-                            number_ele.style.border = '2px green solid'
-                            number_ele.disabled = true
-                            number_validation.innerText = 'Number verified!'
+                            email_ele.style.border = '2px green solid'
+                            email_ele.disabled = true
+                            email_validation.innerText = 'Email verified!'
                             otp_btn_loader.style.display = 'none'
-                            document.getElementById('number_verified').value = 'yes'
+                            document.getElementById('email_verified').value = 'yes'
 
                         } else {
                             attempts_ele.innerText = response_data.attempts
@@ -767,9 +768,9 @@
                             otp_btn_loader.style.display = 'none'
 
                             if (response_data.attempts_exceeded){
-                                number_validation.innerText = 'All attempts used, please re-verify'
-                                number_validation.style.color = 'red'
-                                number_ele.style.border = '2px red solid'
+                                email_validation.innerText = 'All attempts used, please re-verify'
+                                email_validation.style.color = 'red'
+                                email_ele.style.border = '2px red solid'
                                 $('#otpModal').modal('hide')
                                 otp_btn_loader.style.display = 'none'
                             }

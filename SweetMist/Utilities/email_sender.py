@@ -20,12 +20,6 @@ EMAIL = decode_base64(BOT_CONFIG.get('SMTP Creds','email'))
 PASSWORD = decode_base64(BOT_CONFIG.get('SMTP Creds','password'))
 DOMAIN = BOT_CONFIG.get("Server", "domain")
 
-SMTP_SERVER = 'smtpout.secureserver.net'
-SMTP_PORT = 465
-EMAIL = 'support@sweetmist.in'
-PASSWORD = 'Navkar@108'
-DOMAIN = ''
-
 def send_order_success_mail(order_id:str, to_email:str):
     try:
         recipient_email = to_email

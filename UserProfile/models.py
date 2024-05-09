@@ -21,12 +21,13 @@ class UserData(models.Model):
 
 
 class Otp(models.Model):
-    user_id = models.CharField(max_length=10,null=True)
-    session_id = models.CharField(max_length=255,null=True)
+    user_id = models.CharField(max_length=10,null=True, blank=True)
+    session_id = models.CharField(max_length=255,null=True, blank=True)
     otp = models.CharField(max_length=6)
-    number = models.CharField(max_length=15)
+    number = models.CharField(max_length=15, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
     attempts = models.IntegerField(default=0)
-    create_date = models.DateTimeField(default=timezone.now,null=True)
+    create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     token = models.CharField(max_length=255,default='Null')
         
