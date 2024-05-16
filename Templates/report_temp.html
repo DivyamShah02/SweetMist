@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Mist Order Report</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="my-4 text-sm-prm">Sweet Mist Orders</h1>
+        <div class="product-tab" style="padding-top: 0 !important;">
+            <div class="tab-item">
+                <ul class="nav" role="tablist">
+                    <li>
+                        <a class="active" data-toggle="tab" href="#tab-1" role="tab">Unpacked</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-2" role="tab">Packed</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-3" role="tab">In Transit</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-4" role="tab">delivered</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-item-content">
+                <div class="tab-content">
+                    <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                        <h2>Unpacked orders</h2>
+                        <div class="row">
+                            {% for order in unpacked_order %}  
+                            <div class="col-12 col-lg-3 col-md-6 mb-3">
+                                <div class="card" style="border: 2px solid var(--primary-color); background-color: rgba(128, 128, 128, 0.421);">
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                    <div class="col-12">
+                                        <div class="numbers">
+                                        <h5 class="text-sm-prm">{{order.name}}</h5>
+                                        {% for item in order.items %}
+                                        <hr>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.product_title}}
+                                        </h6>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.per_item}} X {{item.qty}}
+                                        </h6>
+                                        {% endfor %}
+                                        <hr style="border: 2px solid var(--primary-color);">                                    
+                                        <h5 class="font-weight-bolder my-3">
+                                            Total : {{order.tot_amt}}
+                                        </h5>
+                                        <p class="mb-0">
+                                            {{order.number}}
+                                        </p>
+                                        <p class="mb-0">
+                                            {{order.address}}
+                                        </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-sm-prm w-100 my-3" id="{{order.order_id}}_btn" onclick="api_order_packed('{{order.order_id}}')">Packed</button>
+                                        <button class="btn btn-sm-prm w-100 my-3" style="display: none;" id="{{order.order_id}}_loader"><span class="spinner-border loading-bh"></snap></button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>                            
+                            {% endfor %}
+                        </div>
+                        <table style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                    <th>Number</th>
+                                    <th>Date</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>  
+                                {% for order in unpacked_order %}  
+                                <tr>
+                                    <td>{{order.name}}</td>
+                                    <td>
+                                        {% for item in order.items %}
+                                        {{item.product_title}} ({{item.per_item}}) X {{item.qty}}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{order.tot_amt}}</td>
+                                    <td>{{order.number}}</td>
+                                    <td>{{order.order_date}}</td>
+                                    <td>{{order.address}}</td>
+                                </tr>    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                        <h2>Packed orders</h2>
+                        <div class="row">
+                            {% for order in packed_order %}  
+                            <div class="col-12 col-lg-3 col-md-6 mb-3">
+                                <div class="card" style="border: 2px solid var(--primary-color); background-color: rgba(128, 128, 128, 0.421);">
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                    <div class="col-12">
+                                        <div class="numbers">
+                                        <h5 class="text-sm-prm">{{order.name}}</h5>
+                                        {% for item in order.items %}
+                                        <hr>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.product_title}}
+                                        </h6>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.per_item}} X {{item.qty}}
+                                        </h6>
+                                        {% endfor %}
+                                        <hr style="border: 2px solid var(--primary-color);">                                    
+                                        <h5 class="font-weight-bolder my-3">
+                                            Total : {{order.tot_amt}}
+                                        </h5>
+                                        <p class="mb-0">
+                                            {{order.number}}
+                                        </p>
+                                        <p class="mb-0">
+                                            {{order.address}}
+                                        </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-sm-prm w-100 my-3" id="{{order.order_id}}_btn" onclick="api_order_out_for_delivery('{{order.order_id}}')">Out For Delivery</button>
+                                        <button class="btn btn-sm-prm w-100 my-3" style="display: none;" id="{{order.order_id}}_loader"><span class="spinner-border loading-bh"></snap></button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>                            
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                            <h2>Out for Delivery orders</h2>
+                            <div class="row">
+                                {% for order in out_for_deliver_order %}  
+                                <div class="col-12 col-lg-3 col-md-6 mb-3">
+                                    <div class="card" style="border: 2px solid var(--primary-color); background-color: rgba(128, 128, 128, 0.421);">
+                                    <div class="card-body p-3">
+                                        <div class="row">
+                                        <div class="col-12">
+                                            <div class="numbers">
+                                            <h5 class="text-sm-prm">{{order.name}}</h5>
+                                            {% for item in order.items %}
+                                            <hr>
+                                            <h6 class="font-weight-bolder">
+                                                {{item.product_title}}
+                                            </h6>
+                                            <h6 class="font-weight-bolder">
+                                                {{item.per_item}} X {{item.qty}}
+                                            </h6>
+                                            {% endfor %}
+                                            <hr style="border: 2px solid var(--primary-color);">                                    
+                                            <h5 class="font-weight-bolder my-3">
+                                                Total : {{order.tot_amt}}
+                                            </h5>
+                                            <p class="mb-0">
+                                                {{order.number}}
+                                            </p>
+                                            <p class="mb-0">
+                                                {{order.address}}
+                                            </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-sm-prm w-100 my-3" id="{{order.order_id}}_btn" onclick="api_order_delivered('{{order.order_id}}')">Delivered</button>
+                                            <button class="btn btn-sm-prm w-100 my-3" style="display: none;" id="{{order.order_id}}_loader"><span class="spinner-border loading-bh"></snap></button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>                            
+                                {% endfor %}
+                            </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-4" role="tabpanel">
+                        <h2>Delivered orders</h2>
+                        <div class="row">
+                            {% for order in delivered_order %}  
+                            <div class="col-12 col-lg-3 col-md-6 mb-3">
+                                <div class="card" style="border: 2px solid var(--primary-color); background-color: rgba(128, 128, 128, 0.421);">
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                    <div class="col-12">
+                                        <div class="numbers">
+                                        <h5 class="text-sm-prm">{{order.name}}</h5>
+                                        {% for item in order.items %}
+                                        <hr>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.product_title}}
+                                        </h6>
+                                        <h6 class="font-weight-bolder">
+                                            {{item.per_item}} X {{item.qty}}
+                                        </h6>
+                                        {% endfor %}
+                                        <hr style="border: 2px solid var(--primary-color);">                                    
+                                        <h5 class="font-weight-bolder my-3">
+                                            Total : {{order.tot_amt}}
+                                        </h5>
+                                        <p class="mb-0">
+                                            {{order.number}}
+                                        </p>
+                                        <p class="mb-0">
+                                            {{order.address}}
+                                        </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <!-- <button class="btn btn-sm-prm w-100 my-3">Packed</button> -->
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>                            
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        async function api_order_packed(order_id) {
+            try {
+                document.getElementById(order_id+'_btn').style.display = 'none'
+                document.getElementById(order_id+'_loader').style.display = 'block'
+                const response = await fetch("{% url 'api_order_packed' %}?order_id="+order_id, {
+                    method: 'GET'});
+                
+                const data = await response.json();
+                console.log(JSON.stringify(data, null, 2))
+                if (data.success == true){                    
+                    location.reload()
+                }
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        
+        async function api_order_out_for_delivery(order_id) {
+            try {
+                document.getElementById(order_id+'_btn').style.display = 'none'
+                document.getElementById(order_id+'_loader').style.display = 'block'
+                const response = await fetch("{% url 'api_order_out_for_delivery' %}?order_id="+order_id, {
+                    method: 'GET'});
+                
+                const data = await response.json();
+                console.log(JSON.stringify(data, null, 2))
+                if (data.success == true){                    
+                    location.reload()
+                }
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        
+        async function api_order_delivered(order_id) {
+            try {
+                document.getElementById(order_id+'_btn').style.display = 'none'
+                document.getElementById(order_id+'_loader').style.display = 'block'
+                const response = await fetch("{% url 'api_order_delivered' %}?order_id="+order_id, {
+                    method: 'GET'});
+                
+                const data = await response.json();
+                console.log(JSON.stringify(data, null, 2))
+                if (data.success == true){                    
+                    location.reload()
+                }
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        
+    </script>
+</body>
+</html>

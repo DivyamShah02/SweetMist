@@ -33,23 +33,24 @@
     <!-- Partner Logo Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer-section">
+    <footer class="footer-section" style="background-color: var(--primary-color) !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <h1 style="color: var(--primary-color); font-family: 'Patrick Hand', cursive; font-size: xxx-large;">Sweet Mist</h1>
-                            
+                            <h1 style="color: white; font-family: 'Patrick Hand', cursive; font-size: xxx-large;">Sweet Mist</h1>
+
                         </div>
                         <ul>
+                            <li>Pan India Delivery</li>
                             <li>Address: Ahmedabad, Gujarat</li>
                             <li>Phone: +91 9016971591</li>
                             <li>Email: support@sweetmist.in</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/sweetmist_snehi"><i class="fa fa-instagram"></i></a>
                             <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
@@ -61,8 +62,8 @@
                         <ul>
                             <li><a href="{% url 'home-list' %}">Home</a></li>
                             <li><a href="#">About Us</a></li>
-                            <li><a href="{% url 'shop-list' %}">Shop</a></li>
-                            <li><a href="{% url 'contact-list' %}">Contact</a></li>
+                            <li><a href="{% url 'privacy-list' %}">Privacy Policy</a></li>
+                            <li><a href="{% url 'terms_conds-list' %}">Terms & Conditions</a></li>
                             <!-- <li><a href="">Blogs</a></li> -->
                         </ul>
                     </div>
@@ -84,7 +85,7 @@
                         <p>Get E-mail updates about our latest shop and special offers.</p>
                         <form action="#" class="subscribe-form">
                             <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
+                            <button type="button" style="background-color: white !important; color: var(--primary-color) !important;">Subscribe</button>
                         </form>
                     </div>
                 </div>
@@ -96,8 +97,8 @@
                     <div class="col-lg-12">
                         <div class="copyright-text">
                             <!-- Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | <b>Sweet Mist</b><br> -->
-                            <script>document.write(new Date().getFullYear());</script> &copy; All rights reserved | <b>Sweet Mist</b><br>
-                            Made with <i class="fa fa-heart-o text-sm-prm" aria-hidden="true"></i> by <a href="#" target="_blank"><b>Divyam Shah</b></a>
+                            <script>document.write(new Date().getFullYear());</script> &copy; All rights reserved | <a href="{% url 'home-list' %}"><b style="color: white !important;">Sweet Mist</b></a><br>
+                            Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#" target="_blank"><b style="color: white !important;">Divyam Shah</b></a>
                         </div>
                         <!-- <div class="payment-pic">
                             <img src="/static/img/payment-method.png" alt="">

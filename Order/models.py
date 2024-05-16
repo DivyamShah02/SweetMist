@@ -29,21 +29,23 @@ class Order(models.Model):
         # ('OS', 'Other Status'),
     )
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='UP')
+    
+    made = models.BooleanField(default=False)
 
     shipment = models.BooleanField(default=False)
     in_transit_date = models.DateTimeField(null=True, blank=True)
     # payment_id = models.CharField(max_length=15)
-    
+
     delivered = models.BooleanField(default=False)
     delivery_date = models.DateTimeField(null=True, blank=True)
-    
+
     paid = models.BooleanField(default=False)
     payment_session_id = models.CharField(max_length=255)
     pg_order_id = models.CharField(max_length=255)
     pg_order_status = models.CharField(max_length=255)
     pg_payment_id = models.CharField(max_length=255)
     pg_payment_group = models.CharField(max_length=255, null=True, blank=True)
-    
+
 
 
 class OrderItem(models.Model):

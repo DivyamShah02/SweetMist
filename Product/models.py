@@ -4,25 +4,31 @@ from django.utils import timezone
 # Create your models here.
 
 class Product(models.Model):
-    title = models.CharField(max_length=255,null=True)
-    slug = models.SlugField(max_length=255,unique=True,null=True)
-    sku = models.CharField(max_length=10,null=True)
-    category = models.CharField(max_length=100,null=True)
-    tags = models.CharField(max_length=255,null=True)
-    info = models.TextField(null=True)
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255,unique=True)
+    sku = models.CharField(max_length=10)
+    category = models.CharField(max_length=100)
+    tags = models.CharField(max_length=255)
+    info = models.TextField()
+    
+    no_of_item = models.CharField(max_length=4, null=True, blank=True)
+    per_item_weight = models.CharField(max_length=255, null=True, blank=True)
+    total_weight = models.CharField(max_length=255, null=True, blank=True)
 
-    price = models.CharField(max_length=30,null=True) #actual selling price
-    high_price = models.CharField(max_length=30,null=True) #high price that will be canceled
-    discounted_price = models.CharField(max_length=30,null=True) #total amt of discount
-    discount_rate = models.CharField(max_length=3,null=True) #rate of discount
+    price = models.CharField(max_length=30) #actual selling price
+    high_price = models.CharField(max_length=30) #high price that will be canceled
+    discounted_price = models.CharField(max_length=30, null=True, blank=True) #total amt of discount
+    discount_rate = models.CharField(max_length=3, null=True, blank=True) #rate of discount
+    
+    cost_price = models.CharField(max_length=30 ,null=True, blank=True) #cost price wont be shown on website    
 
-    image_1 = models.ImageField(upload_to='Product_Img',null=True)
-    image_2 = models.ImageField(upload_to='Product_Img',null=True)
-    image_3 = models.ImageField(upload_to='Product_Img',null=True)
-    image_4 = models.ImageField(upload_to='Product_Img',null=True)
-    image_5 = models.ImageField(upload_to='Product_Img',null=True)
-    cart_image = models.ImageField(upload_to='Product_Img',null=True)
-    add_date = models.DateTimeField(default=timezone.now,null=True)
+    image_1 = models.ImageField(upload_to='Product_Img')
+    image_2 = models.ImageField(upload_to='Product_Img')
+    image_3 = models.ImageField(upload_to='Product_Img')
+    image_4 = models.ImageField(upload_to='Product_Img')
+    image_5 = models.ImageField(upload_to='Product_Img')
+    cart_image = models.ImageField(upload_to='Product_Img')
+    add_date = models.DateTimeField(default=timezone.now)
     
     active = models.BooleanField(default=False)
     

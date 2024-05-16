@@ -27,6 +27,26 @@ class ContactView(ViewSet):
             log_error(request, e)
             return redirect('home-list')
 
+class PrivacyView(ViewSet):
+    def list(self, request):
+        log_access(request)
+        try:
+            return render(request, 'MainPages/privacy.html', status=status.HTTP_200_OK)
+
+        except Exception as e:
+            log_error(request, e)
+            return redirect('home-list')
+
+class TermsCondsView(ViewSet):
+    def list(self, request):
+        log_access(request)
+        try:
+            return render(request, 'MainPages/terms_conds.html', status=status.HTTP_200_OK)
+
+        except Exception as e:
+            log_error(request, e)
+            return redirect('home-list')
+
 class FaqView(ViewSet):
     def list(self, request):
         log_access(request)

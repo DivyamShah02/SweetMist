@@ -495,6 +495,7 @@ class OrderDetailsView(ViewSet):
                                     order_edit.paid = True
                                     order_edit.pg_order_status = payment_details['payment_status']
                                     order_edit.pg_payment_id = payment_details['cf_payment_id']
+                                    order_edit.status = 'PL'                    
                                     order_edit.save()
                                     if not order_data.email_sent:
                                         order_edit = Order.objects.get(order_id=order_id)
@@ -643,3 +644,28 @@ class InvoiceView(ViewSet):
             log_error(request, e)
             return redirect('account-list')
 
+class CheckPaymentsView(ViewSet):
+    def list(self,request):
+        log_access(request)
+        try:
+            all_unpaid_orders = Order.objects.filter(paid=False)
+            for order_data in all_unpaid_orders:
+                got_payment_details, payment_details = get_payment_details(order_id=order_data.order_id)
+                if got_payment_details:
+                    if payment_details['is_captured']:
+                        order_edit = Order.objects.get(order_id=order_data.order_id)
+                        order_edit.paid = True
+                        order_edit.pg_order_status = payment_details['payment_status']
+                        order_edit.pg_payment_id = payment_details['cf_payment_id']
+                        order_edit.status = 'PL'                        
+                        order_edit.save()
+                        if not order_data.email_sent:
+                            order_edit = Order.objects.get(order_id=order_data.order_id)
+                            user = UserData.objects.filter(user_id=order_data.user_id).first()
+                            order_edit.email_sent = send_order_success_mail(order_id=order_data.order_id, to_email=user.email)
+                            order_edit.save()
+            return JsonResponse({'success':True})
+
+        except Exception as e:
+            log_error(request, e)
+            return JsonResponse({'success':False, 'details':e})

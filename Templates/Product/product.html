@@ -39,8 +39,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./shop.html">Shop</a>
+                        <a href="{% url 'home-list' %}"><i class="fa fa-home"></i> Home</a>
+                        <a href="{% url 'shop-list' %}">Shop</a>
                         <span>Detail</span>
                     </div>
                 </div>
@@ -181,9 +181,14 @@
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
                                 <img class="product-big-img" src="{{product_data.image_1}}" alt="">
-                                <div class="zoom-icon">
-                                    <i class="fa fa-search-plus"></i>
-                                </div>
+                                {% if product_data.active == True %}
+                                <div class="img-label-success">{{product_data.discount_rate}}% off</div>
+                                {% else %}
+                                <div class="img-label-danger">out of stock</div>
+                                {% endif %}
+                                <!--<div class="zoom-icon">-->
+                                <!--    <i class="fa fa-search-plus"></i>-->
+                                <!--</div>-->
                             </div>
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
@@ -211,7 +216,8 @@
                                     document.getElementById('fill_heart').style.display = 'none';
                                     document.getElementById('heart').style.display = 'block';" class="heart-icon text-sm-prm"><i class="icon_heart"></i></a>
                                     {% if product_data.active != True%}
-                                    <h5 class="text-sm-prm">Launching Soon!</h5>
+                                    <!-- <h5 class="text-sm-prm">Launching Soon!</h5> -->
+                                    <h5 class="text-sm-prm">out of stock!</h5>
                                     {% endif %}
                                 </div>
                                 <div class="pd-rating">
@@ -242,8 +248,8 @@
                                             <label for="cc-violet" class="cc-violet"></label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="pd-size-choose">
+                                </div> -->
+                                <!-- <div class="pd-size-choose">
                                     <div class="sc-item">
                                         <input type="radio" id="sm-size">
                                         <label for="sm-size">s</label>
@@ -261,6 +267,10 @@
                                         <label for="xl-size">xs</label>
                                     </div>
                                 </div> -->
+                                <ul class="pd-tags" style="padding-left: 0 !important;">
+                                    <li><span>Weight</span>: {{product_data.no_of_item}} X {{product_data.per_item_weight}}</li>
+                                    <span style="font-size: small;">({{product_data.per_item_weight}} each packet)</span>
+                                </ul>
                                 <div class="quantity">
                                     <div class="pro-qty">
                                         <input type="number" value="1" min="1" id="qty">
@@ -286,44 +296,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product-tab" style="display: none;">
+                    <div class="product-tab">
                         <div class="tab-item">
                             <ul class="nav" role="tablist">
                                 <li>
-                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+                                    <a class="active" data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
+                                    <a data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <div class="tab-item-content">
                             <div class="tab-content">
-                                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
-                                    <div class="product-content">
-                                        <div class="row">
-                                            <div class="col-lg-7">
-                                                <h5>Introduction</h5>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
-                                                <h5>Features</h5>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <img src="/static/img/product-single/tab-desc.jpg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                                <div class="tab-pane fade-in active" id="tab-2" role="tabpanel">
                                     <div class="specification-table">
                                         <table>
                                             <tr>
@@ -342,28 +331,34 @@
                                             <tr>
                                                 <td class="p-catagory">Price</td>
                                                 <td>
-                                                    <div class="p-price">$495.00</div>
+                                                    <div class="p-price">₹ {{product_data.price}}</div>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td class="p-catagory">Add To Cart</td>
                                                 <td>
                                                     <div class="cart-add">+ add to cart</div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <td class="p-catagory">Availability</td>
                                                 <td>
-                                                    <div class="p-stock">22 in stock</div>
+                                                    <div class="p-stock">In stock</div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="p-catagory">Weight</td>
                                                 <td>
-                                                    <div class="p-weight">1,3kg</div>
+                                                    <div class="p-weight">{{product_data.total_weight}}</div>
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="p-catagory"><img src="/static/img/fssai_logo.png" width="50%"></td>
+                                                <td>
+                                                    <div class="p-weight">20724034000412</div>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr>
                                                 <td class="p-catagory">Size</td>
                                                 <td>
                                                     <div class="p-size">Xxl</div>
@@ -378,10 +373,34 @@
                                                 <td>
                                                     <div class="p-code">00012</div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                         </table>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane fade" id="tab-1" role="tabpanel">
+                                    <div class="product-content">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <h5>{{product_data.title}}</h5>
+                                                <p>{{product_data.info}}</p>
+                                                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                    aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+                                                <h5>Features</h5>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                    aliquip ex ea commodo consequat. Duis aute irure dolor in </p> -->
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <img src="{{product_data.image_2}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="tab-pane fade" id="tab-3" role="tabpanel">
                                     <div class="customer-review-option">
                                         <h4>2 Comments</h4>
@@ -457,7 +476,7 @@
     </section>
     <!-- Product Shop Section End -->
 
-    <div class="modal fade" id="launchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="launchModalTEmp" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -474,6 +493,23 @@
         </div>
       </div>
 
+    <div class="modal fade" id="launchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-sm-prm" id="launchModalLabel">Out of stock</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            This product is out of stock! Stay tuned.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
 
     {% include "related_products.html" %}
     {% include "footer.html" %}
@@ -485,13 +521,13 @@
             var modal = new bootstrap.Modal(launchModal);
             modal.show();
         }
-    
+
         function buy_now(){
             var launchModal = document.getElementById('launchModal');
             var modal = new bootstrap.Modal(launchModal);
             modal.show();
         }
-    
+
     </script>
     {% else %}
     <script>
@@ -513,7 +549,7 @@
                 },
                 // body: JSON.stringify({ slug: slug, qty: qty })
             });
-            
+
             const data = await response.json();
             console.log(JSON.stringify(data, null, 2))
             if (data.success == true){
@@ -527,7 +563,7 @@
             console.log(error.message)
         }
         }
-    
+
         function buy_now(){
             const qty_ele = document.getElementById('qty')
             const qty = qty_ele.value
@@ -535,7 +571,7 @@
 
             window.location.href = "{% url 'check_out-list' %}?product_id=" + prod_id + "&qty=" + qty;
         }
-    
+
     </script>
     {% endif %}
 
